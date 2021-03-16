@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "574923192048",
+    "firebase_url": "https://remottely-key-firebase.firebaseio.com",
+    "project_id": "remottely-key-firebase",
+    "storage_bucket": "remottely-key-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:574923192048:android:152a28f52942ac1dba3435",
+        "android_client_info": {
+          "package_name": "com.remottely.remottelykey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "574923192048-3btl9ncsr1eqsrhkevjfaerv89okdrml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy-rnrKZAAbtePw0ynMwdQORieCYwKZg8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "574923192048-3btl9ncsr1eqsrhkevjfaerv89okdrml.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
