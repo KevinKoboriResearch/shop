@@ -40,6 +40,7 @@ class Products with ChangeNotifier {
           title: productData['title'],
           description: productData['description'],
           price: productData['price'],
+          quantity: productData['quantity'],
           imageUrl: productData['imageUrl'],
           isFavorite: isFavorite,
         ));
@@ -56,6 +57,7 @@ class Products with ChangeNotifier {
         'title': newProduct.title,
         'description': newProduct.description,
         'price': newProduct.price,
+        'quantity': newProduct.quantity,
         'imageUrl': newProduct.imageUrl,
       }),
     );
@@ -65,6 +67,7 @@ class Products with ChangeNotifier {
       title: newProduct.title,
       description: newProduct.description,
       price: newProduct.price,
+      quantity: newProduct.quantity,
       imageUrl: newProduct.imageUrl,
     ));
     notifyListeners();
@@ -83,6 +86,7 @@ class Products with ChangeNotifier {
           'title': product.title,
           'description': product.description,
           'price': product.price,
+          'quantity': product.quantity,
           'imageUrl': product.imageUrl,
         }),
       );

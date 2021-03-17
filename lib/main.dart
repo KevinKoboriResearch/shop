@@ -17,7 +17,54 @@ import './providers/cart.dart';
 import './providers/orders.dart';
 import './providers/auth.dart';
 
-void main() => runApp(MyApp());
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+// import 'package:remottely/views/control/auth_app_page.dart';
+// import 'package:remottely/views/device/device_detail_page.dart';
+// import 'package:remottely/views/device/devices_manage_page_list.dart';
+// import 'package:remottely/views/device/device_form_page.dart';
+// import 'package:remottely/utils/constants.dart';
+import 'package:firebase_core/firebase_core.dart';
+// final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+// import 'package:remottely/utils/constants.dart';
+// import 'package:remottely/views/control/auth_screen.dart';
+// import 'package:remottely/widgets/design/dot_indicator_widget.dart';
+// import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+// import 'package:remottely/utils/my_flutter_app_icons.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+// import 'package:remottely/views/control/marketing_page.dart';
+// import 'package:remottely/views/control/block_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase/firebase.dart';
+// import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+
+// import 'package:remottely/views/device/devices_page_list.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
+// import 'package:remottely/views/device/device_detail_page.dart';
+// import 'package:remottely/views/device/device_form_page.dart';
+// import 'package:remottely/providers/auth_provider.dart';
+// import 'package:remottely/utils/constants.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+// import 'package:remottely/views/control/marketing_page.dart';
+// import 'package:remottely/views/control/block_page.dart';
+// import 'package:remottely/views/device/devices_page_list.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(
+    MyApp(),
+  );
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -51,9 +98,15 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'tapanapanterahs',
         theme: ThemeData(
-          primarySwatch: Colors.green,
+          // textTheme: TextTheme(headline1: TextStyle(color: Colors.black)),
+          brightness: Brightness.light,
+          hoverColor: Colors.orange,
+          splashColor: Colors.white,
+          primaryColor: Colors.white,
+          dividerColor: Colors.grey[100],
           accentColor: Colors.deepOrange,
           fontFamily: 'Lato',
+          canvasColor: Colors.grey[100],
           pageTransitionsTheme: PageTransitionsTheme(
             builders: {
               TargetPlatform.android: CustomPageTransitionsBuilder(),

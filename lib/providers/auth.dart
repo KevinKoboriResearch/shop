@@ -9,15 +9,20 @@ import 'package:shop/utils/constants.dart';
 class Auth with ChangeNotifier {
   String _userId;
   String _token;
+  String _username;
   DateTime _expiryDate;
   Timer _logoutTimer;
 
-  bool get isAuth {
-    return token != null;
-  }
-
   String get userId {
     return isAuth ? _userId : null;
+  }
+
+  String get username {
+    return _username != null ? _username : null;
+  }
+
+  bool get isAuth {
+    return token != null;
   }
 
   String get token {
@@ -31,7 +36,7 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> _authenticate(
-      String email, String password, String urlSegment) async {
+      String email, String password, String username, String urlSegment) async {
     final url =
         'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=${AppKey.detectGoogleApi}';//${AppKey.detectGoogleApi}';//AIzaSyAy-rnrKZAAbtePw0ynMwdQORieCYwKZg8
 
@@ -40,6 +45,7 @@ class Auth with ChangeNotifier {
       body: json.encode({
         "email": email,
         "password": password,
+        "displayName": username,
         "returnSecureToken": true,
       }),
     );
@@ -50,6 +56,7 @@ class Auth with ChangeNotifier {
     } else {
       _token = responseBody["idToken"];
       _userId = responseBody["localId"];
+      _username = responseBody["displayName"];
       _expiryDate = DateTime.now().add(
         Duration(
           seconds: int.parse(responseBody["expiresIn"]),
@@ -59,6 +66,7 @@ class Auth with ChangeNotifier {
       Store.saveMap('userData', {
         "token": _token,
         "userId": _userId,
+        "username": _username,
         "expiryDate": _expiryDate.toIso8601String(),
       });
 
@@ -69,12 +77,12 @@ class Auth with ChangeNotifier {
     return Future.value();
   }
 
-  Future<void> signup(String email, String password) async {
-    return _authenticate(email, password, "signUp");
+  Future<void> signup(String email, String password, String username) async {
+    return _authenticate(email, password, username, "signUp");
   }
 
   Future<void> login(String email, String password) async {
-    return _authenticate(email, password, "signInWithPassword");
+    return _authenticate(email, password, null, "signInWithPassword");
   }
 
   Future<void> tryAutoLogin() async {
@@ -95,6 +103,7 @@ class Auth with ChangeNotifier {
 
     _userId = userData["userId"];
     _token = userData["token"];
+    _username = userData["username"];
     _expiryDate = expiryDate;
 
     _autoLogout();

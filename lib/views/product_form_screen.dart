@@ -11,6 +11,7 @@ class ProductFormScreen extends StatefulWidget {
 
 class _ProductFormScreenState extends State<ProductFormScreen> {
   final _priceFocusNode = FocusNode();
+  final _quantityFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
   final _imageUrlFocusNode = FocusNode();
   final _imageUrlController = TextEditingController();
@@ -34,6 +35,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
       if (product != null) {
         _formData['id'] = product.id;
         _formData['title'] = product.title;
+        _formData['quantity'] = product.quantity;
         _formData['description'] = product.description;
         _formData['price'] = product.price;
         _formData['imageUrl'] = product.imageUrl;
@@ -41,6 +43,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
         _imageUrlController.text = _formData['imageUrl'];
       } else {
         _formData['price'] = '';
+        // _formData['quantity'] = '';
       }
     }
   }
@@ -65,6 +68,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
   void dispose() {
     super.dispose();
     _priceFocusNode.dispose();
+    _quantityFocusNode.dispose();
     _descriptionFocusNode.dispose();
     _imageUrlFocusNode.removeListener(_updateImage);
     _imageUrlFocusNode.dispose();
@@ -83,6 +87,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
       id: _formData['id'],
       title: _formData['title'],
       price: _formData['price'],
+      quantity: _formData['quantity'],
       description: _formData['description'],
       imageUrl: _formData['imageUrl'],
     );
@@ -173,8 +178,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                         decimal: true,
                       ),
                       onFieldSubmitted: (_) {
-                        FocusScope.of(context)
-                            .requestFocus(_descriptionFocusNode);
+                        FocusScope.of(context).requestFocus(_quantityFocusNode);
                       },
                       onSaved: (value) =>
                           _formData['price'] = double.parse(value),
@@ -189,6 +193,59 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
 
                         return null;
                       },
+                    ),
+                    // TextFormField(
+                    //   initialValue: _formData['quantity'].toString(),
+                    //   decoration: InputDecoration(
+                    //     labelText: 'Quantidade',
+                    //     hintText: 'ex: unitario ou kit com 3...',
+                    //   ),
+                    //   textInputAction: TextInputAction.next,
+                    //   focusNode: _quantityFocusNode,
+                    //   keyboardType: TextInputType.numberWithOptions(
+                    //     decimal: true,
+                    //   ),
+                    //   onFieldSubmitted: (_) {
+                    //     FocusScope.of(context)
+                    //         .requestFocus(_descriptionFocusNode);
+                    //   },
+                    //   onSaved: (value) =>
+                    //       _formData['quantity'] = double.parse(value),
+                    //   validator: (value) {
+                    //     bool isEmpty = value.trim().isEmpty;
+                    //     var newQuantity = double.tryParse(value);
+                    //     bool isInvalid =
+                    //         newQuantity == null || newQuantity <= 0;
+
+                    //     if (isEmpty || isInvalid) {
+                    //       return 'Informe um Quantidade válido!';
+                    //     }
+
+                    //     return null;
+                    //   },
+                    // ),
+                    TextFormField(
+                      initialValue: _formData['quantity'],
+                      decoration: InputDecoration(labelText: 'Quantidade'),
+                      // maxLines: 1,
+                      textInputAction: TextInputAction.next,
+                      focusNode: _quantityFocusNode,
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context)
+                            .requestFocus(_descriptionFocusNode);
+                      },
+                      onSaved: (value) =>
+                          _formData['quantity'] = value != null ? value : '',
+                      // validator: (value) {
+                      //   bool isEmpty = value.trim().isEmpty;
+                      //   bool isInvalid = value.trim().length < 2;
+
+                      //   if (isEmpty || isInvalid) {
+                      //     return 'Informe uma Descrição válida com no mínimo 2 caracteres!';
+                      //   }
+
+                      //   return null;
+                      // },
                     ),
                     TextFormField(
                       initialValue: _formData['description'],

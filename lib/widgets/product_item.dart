@@ -18,13 +18,17 @@ class ProductItem extends StatelessWidget {
       leading: CircleAvatar(
         backgroundImage: NetworkImage(product.imageUrl),
       ),
-      title: Text(product.title),
+      title: Text(
+        product.title,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
       trailing: Container(
-        width: 100,
+        width: 80, //MediaQuery.maybeOf(context).size.width,
         child: Row(
           children: <Widget>[
             IconButton(
-              icon: Icon(Icons.edit),
+              icon: Icon(Icons.edit, color: Colors.black,),
               color: Theme.of(context).primaryColor,
               onPressed: () {
                 Navigator.of(context)

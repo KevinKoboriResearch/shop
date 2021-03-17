@@ -27,7 +27,12 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-
+  firebase_core: ^0.5.2 #Recursos básicos
+  cloud_firestore: ^0.14.3 #banco de dados
+  firebase_storage: ^5.0.1 #armazenamento arquivos
+  firebase_auth: ^0.18.3 #autenticacao
+  firebase_admin: ^0.1.4
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -46,7 +51,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - assets/images/product-placeholder.png
+    - assets/images/product-placeholder.png
+    - assets/images/
+    - assets/logo/
+    - assets/icon/
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -69,6 +77,9 @@ flutter:
     - family: Anton
       fonts:
         - asset: assets/fonts/Anton-Regular.ttf
+    - family: MyFlutterApp
+      fonts:
+        - asset: assets/fonts/MyFlutterApp.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

@@ -105,6 +105,7 @@ class _AuthCardState extends State<AuthCard>
         await auth.signup(
           _authData["email"],
           _authData["password"],
+          null,
         );
       }
     } on AuthException catch (error) {
