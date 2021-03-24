@@ -5,9 +5,20 @@ import 'package:http/http.dart' as http;
 import 'package:shop/exceptions/http_exception.dart';
 import 'package:shop/utils/constants.dart';
 import './product.dart';
+// .collection('remottelyCompanies')
+// .doc(product.companyTitle) //.doc('tapanapanterahs') //
+// .collection('productCategories')
+// .doc(product.categoryTitle) //.doc('Tabacos') //
+// .collection('products')
+// .doc(product.title)
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'dart:async';
 
 class Products with ChangeNotifier {
-  final String _baseUrl = '${AppURLs.BASE_API_URL}/products';
+  final auth = FirebaseAuth.instance;
+
   List<Product> _items = [];
   String _token;
   String _userId;
@@ -25,10 +36,12 @@ class Products with ChangeNotifier {
   }
 
   Future<void> loadProducts() async {
-    final response = await http.get("$_baseUrl.json?auth=$_token");
+    final response =
+        await http.get("${AppURLs.BASE_API_URL}/products.json?auth=$_token");
     Map<String, dynamic> data = json.decode(response.body);
-    
-    final favResponse = await http.get("${AppURLs.BASE_API_URL}/userFavorites/$_userId.json?auth=$_token");
+
+    final favResponse = await http.get(
+        "${AppURLs.BASE_API_URL}/userFavorites/$_userId.json?auth=$_token");
     final favMap = json.decode(favResponse.body);
 
     _items.clear();
@@ -50,20 +63,54 @@ class Products with ChangeNotifier {
     return Future.value();
   }
 
-  Future<void> addProduct(Product newProduct) async {
-    final response = await http.post(
-      "$_baseUrl.json?auth=$_token",
-      body: json.encode({
-        'title': newProduct.title,
-        'description': newProduct.description,
-        'price': newProduct.price,
-        'quantity': newProduct.quantity,
-        'imageUrl': newProduct.imageUrl,
-      }),
-    );
+  // Future<void> addProduct(Product newProduct) async {
+  //   final response = await http.post(
+  //     "${AppURLs.BASE_API_URL}/products.json?auth=$_token",
+  //     body: json.encode({
+  //       'title': newProduct.title,
+  //       'description': newProduct.description,
+  //       'price': newProduct.price,
+  //       'quantity': newProduct.quantity,
+  //       'imageUrl': newProduct.imageUrl,
+  //     }),
+  //   );
 
+  //   _items.add(Product(
+  //     id: json.decode(response.body)['name'],
+  //     title: newProduct.title,
+  //     description: newProduct.description,
+  //     price: newProduct.price,
+  //     quantity: newProduct.quantity,
+  //     imageUrl: newProduct.imageUrl,
+  //   ));
+  //   notifyListeners();
+  // }
+
+  Future<void> addProduct(newProduct) async {//, imagesSelectedList) async {
+    await FirebaseFirestore.instance
+        .collection('remottelyCompanies')
+        .doc('tapanapanterahs') // .doc(product.companyTitle) //
+        .collection('productCategories')
+        .doc('Tabacos') //.doc(product.categoryTitle) //
+        .collection('products')
+        .doc(newProduct.title)
+        .set({
+      'title': newProduct.title,
+      'description': newProduct.description,
+      'price': newProduct.price,
+      'quantity': newProduct.quantity,
+      'imageUrl': newProduct.imageUrl,
+    });
+    var response =
+        await FirebaseFirestore.instance.collection('remottelyProducts').add({
+      'title': newProduct.title,
+      'description': newProduct.description,
+      'price': newProduct.price,
+      'quantity': newProduct.quantity,
+      'imageUrl': newProduct.imageUrl,
+    });
     _items.add(Product(
-      id: json.decode(response.body)['name'],
+      id: response.id,
       title: newProduct.title,
       description: newProduct.description,
       price: newProduct.price,
@@ -78,10 +125,10 @@ class Products with ChangeNotifier {
       return;
     }
 
-    final index = 1;//_items.indexWhere((prod) => prod.id == product.id);
+    final index = 1; //_items.indexWhere((prod) => prod.id == product.id);
     if (index >= 0) {
       await http.patch(
-        "$_baseUrl/${product.id}.json?auth=$_token",
+        "${AppURLs.BASE_API_URL}/products/${product.id}.json?auth=$_token",
         body: json.encode({
           'title': product.title,
           'description': product.description,
@@ -96,19 +143,20 @@ class Products with ChangeNotifier {
   }
 
   Future<void> deleteProduct(String id) async {
-    final index = 1;//_items.indexWhere((prod) => prod.id == id);
+    final index = 1; //_items.indexWhere((prod) => prod.id == id);
     if (index >= 0) {
       final product = _items[index];
       _items.remove(product);
       notifyListeners();
 
-      final response = await http.delete("$_baseUrl/${product.id}.json?auth=$_token");
+      final response = await http.delete(
+          "${AppURLs.BASE_API_URL}/products/${product.id}.json?auth=$_token");
 
       if (response.statusCode >= 400) {
         _items.insert(index, product);
         notifyListeners();
         throw HttpException('Ocorreu um erro na exclusão do produto.');
-      } 
+      }
     }
   }
 }

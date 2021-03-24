@@ -69,60 +69,66 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => new Auth(),
-        ),
-        ChangeNotifierProxyProvider<Auth, Products>(
-          create: (_) => new Products(),
-          update: (ctx, auth, previousProducts) => new Products(
-            auth.token,
-            auth.userId,
-            previousProducts.items,
-          ),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => new Cart(),
-        ),
-        ChangeNotifierProxyProvider<Auth, Orders>(
-          create: (_) => new Orders(),
-          update: (ctx, auth, previousOrders) => new Orders(
-            auth.token,
-            auth.userId,
-            previousOrders.items,
-          ),
-        ),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'tapanapanterahs',
-        theme: ThemeData(
-          // textTheme: TextTheme(headline1: TextStyle(color: Colors.black)),
-          brightness: Brightness.light,
-          hoverColor: Colors.orange,
-          splashColor: Colors.white,
-          primaryColor: Colors.white,
-          dividerColor: Colors.grey[100],
-          accentColor: Colors.deepOrange,
-          fontFamily: 'Lato',
-          canvasColor: Colors.grey[100],
-          pageTransitionsTheme: PageTransitionsTheme(
-            builders: {
-              TargetPlatform.android: CustomPageTransitionsBuilder(),
-              TargetPlatform.iOS: CustomPageTransitionsBuilder(),
+    final Future<FirebaseApp> _init = Firebase.initializeApp();
+    return FutureBuilder(
+      future: _init,
+      builder: (ctx, appSnapshot) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (_) => new Auth(),
+            ),
+            ChangeNotifierProxyProvider<Auth, Products>(
+              create: (_) => new Products(),
+              update: (ctx, auth, previousProducts) => new Products(
+                auth.token,
+                auth.userId,
+                previousProducts.items,
+              ),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => new Cart(),
+            ),
+            ChangeNotifierProxyProvider<Auth, Orders>(
+              create: (_) => new Orders(),
+              update: (ctx, auth, previousOrders) => new Orders(
+                auth.token,
+                auth.userId,
+                previousOrders.items,
+              ),
+            ),
+          ],
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'tapanapanterahs',
+            theme: ThemeData(
+              // textTheme: TextTheme(headline1: TextStyle(color: Colors.black)),
+              brightness: Brightness.light,
+              hoverColor: Colors.orange,
+              splashColor: Colors.white,
+              primaryColor: Colors.white,
+              dividerColor: Colors.grey[100],
+              accentColor: Colors.deepOrange,
+              fontFamily: 'Lato',
+              canvasColor: Colors.grey[100],
+              pageTransitionsTheme: PageTransitionsTheme(
+                builders: {
+                  TargetPlatform.android: CustomPageTransitionsBuilder(),
+                  TargetPlatform.iOS: CustomPageTransitionsBuilder(),
+                },
+              ),
+            ),
+            routes: {
+              AppRoutes.AUTH_HOME: (ctx) => AuthOrHomeScreen(),
+              AppRoutes.PRODUCT_DETAIL: (ctx) => ProductDetailScreen(),
+              AppRoutes.CART: (ctx) => CartScreen(),
+              AppRoutes.ORDERS: (ctx) => OrdersScreen(),
+              AppRoutes.PRODUCTS: (ctx) => ProductsScreen(),
+              AppRoutes.PRODUCT_FORM: (ctx) => ProductFormScreen(),
             },
           ),
-        ),
-        routes: {
-          AppRoutes.AUTH_HOME: (ctx) => AuthOrHomeScreen(),
-          AppRoutes.PRODUCT_DETAIL: (ctx) => ProductDetailScreen(),
-          AppRoutes.CART: (ctx) => CartScreen(),
-          AppRoutes.ORDERS: (ctx) => OrdersScreen(),
-          AppRoutes.PRODUCTS: (ctx) => ProductsScreen(),
-          AppRoutes.PRODUCT_FORM: (ctx) => ProductFormScreen(),
-        },
-      ),
+        );
+      },
     );
   }
 }

@@ -106,19 +106,29 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
       }
       Navigator.of(context).pop();
     } catch (error) {
-      await showDialog<Null>(
+      showModalBottomSheet(
         context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text('Ocorreu um erro!'),
-          content: Text('Ocorreu um erro pra salvar o produto!'),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Fechar'),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
+        builder: (_) => Container(
+          height: 140,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [Text('error: ' + error)],
+          ),
         ),
       );
+      // await showDialog<Null>(
+      //   context: context,
+      //   builder: (ctx) => AlertDialog(
+      //     title: Text('Ocorreu um erro!'),
+      //     content: Text('Ocorreu um erro pra salvar o produto!'),
+      //     actions: <Widget>[
+      //       FlatButton(
+      //         child: Text('Fechar'),
+      //         onPressed: () => Navigator.of(context).pop(),
+      //       ),
+      //     ],
+      //   ),
+      // );
     } finally {
       setState(() {
         _isLoading = false;
