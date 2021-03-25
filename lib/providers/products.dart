@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shop/exceptions/http_exception.dart';
 import 'package:shop/utils/constants.dart';
+import 'package:shop/models/product_model.dart';
 import './product.dart';
 // .collection('remottelyCompanies')
 // .doc(product.companyTitle) //.doc('tapanapanterahs') //
@@ -13,11 +14,11 @@ import './product.dart';
 // .doc(product.title)
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import '../compound/firestore_service.dart';
 import 'dart:async';
 
 class Products with ChangeNotifier {
-  final auth = FirebaseAuth.instance;
+  final auth = FirebaseAuth.instance.currentUser;
 
   List<Product> _items = [];
   String _token;
@@ -35,26 +36,110 @@ class Products with ChangeNotifier {
     return _items.where((prod) => prod.isFavorite).toList();
   }
 
-  Future<void> loadProducts() async {
-    final response =
-        await http.get("${AppURLs.BASE_API_URL}/products.json?auth=$_token");
-    Map<String, dynamic> data = json.decode(response.body);
+/////////////
+///
+///
+final FirestoreService _firestoreService = FirestoreService();
 
-    final favResponse = await http.get(
-        "${AppURLs.BASE_API_URL}/userFavorites/$_userId.json?auth=$_token");
-    final favMap = json.decode(favResponse.body);
+  // List<Product> _items;
+  List<Product> get posts => _items;
+
+  void listenToPosts() {
+    // setBusy(true);
+
+    _firestoreService.listenToPostsRealTime().listen((postsData) {
+      List<Product> updatedPosts = postsData;
+      if (updatedPosts != null && updatedPosts.length > 0) {
+        _items = updatedPosts;
+        notifyListeners();
+      }
+
+      // setBusy(false);
+    });
+  }
+
+  void requestMoreData() => _firestoreService.requestMoreData();
+
+///////////////
+///\
+///
+///
+///
+///
+  
+  Future<void> loadProducts() async {
+    final getProducts = await FirebaseFirestore.instance
+        .collection('remottelyCompanies')
+        .doc('tapanapanterahs') // .doc(product.companyTitle) //
+        .collection('productCategories')
+        .doc('Tabacos') //.doc(product.categoryTitle) //
+        .collection('products')
+        .get();
+    final favMap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(auth.uid) // .doc(product.companyTitle) //
+        .collection('favorites')
+        // .where('isFavorite', isEqualTo: id)
+        // .where('oi', isEqualTo: 'oi')
+        .get();
+    // final favMap = getFavorites;
+// final getFavorites = await FirebaseFirestore.instance
+//         .collection('users')
+//         .doc('FYRjAaP0FHSr6DoFSX5KwVzObcn1') // .doc(product.companyTitle) //
+//         .collection('favorites')
+//         .get();
+//     final favMap = getFavorites;
+
+    // _items.clear();
+    // if (getProducts != null) {
+    //   getProducts.docs.forEach((product) {
+    //     final isFavorite = favMap == null ? false : favMap.docs.contains(product.id) ?? false;
 
     _items.clear();
-    if (data != null) {
-      data.forEach((productId, productData) {
-        final isFavorite = favMap == null ? false : favMap[productId] ?? false;
+    if (getProducts != null) {
+      getProducts.docs.forEach((reqProduct) {
+        var isFavorite = false;
+        // var isFavorite = favMap.docs.first.id == reqProduct.id;
+         favMap.docs.forEach((element) {
+           print('EEEEEEEEEEEE >>>>>>> >>>>>>>>> >>>>>> ' + element.id.toString());
+            print('GGGGGGGGGGGG >>>>>>> >>>>>>>>> >>>>>> ' + reqProduct.id.toString());
+          // if(element.data()['isFavorite'] == true) {
+          if (element.id.toString() == reqProduct.id.toString()) {
+            isFavorite = true;
+            return;
+          }
+          // isFavorite = false;
+          // return;
+        });
+        // var oi = getFavorites.where('isFavorite', isEqualTo: reqProduct.id);
+        print('AAAAAAAAAAAAAAAAAAA >>>>>>> >>>>>>>>> >>>>>> ' + isFavorite.toString());
+        // // var hehe = favMap.docs.where('oi': isEqualTo: 'oi');
+        // print(favMap.docs.first.id);//.docs.where('oi': isEqualTo: 'oi') ? 'AAAAAAAAAAAAAAAAAAA': 'false');
+        // final isFavorite = favMap == null ? false : favMap.docs.contains(reqProduct.id) ? true: false;//docs.where("isFavorite", isEqualTo: reqProduct.id) == true ? true : false;//?? false;
         _items.add(Product(
-          id: productId,
-          title: productData['title'],
-          description: productData['description'],
-          price: productData['price'],
-          quantity: productData['quantity'],
-          imageUrl: productData['imageUrl'],
+          // id: product.id,
+          // title: product.data()['title'],
+          // description: product.data()['description'],
+          // price: product.data()['price'],
+          // images: product.data()['images'],
+          // subtitle: product.data()['subtitle'],
+          // promotion: product.data()['promotion'],
+          id: reqProduct.id,
+          coin: reqProduct.data()['coin'],
+          companyTitle: reqProduct.data()['companyTitle'],
+          categoryTitle: reqProduct.data()['categoryTitle'],
+          description: reqProduct.data()['description'],
+          enabled: reqProduct.data()['enabled'],
+          images: reqProduct.data()['images'],
+          interested: reqProduct.data()['interested'],
+          price: reqProduct.data()['price'],
+          promotion: reqProduct.data()['promotion'],
+          rating: reqProduct.data()['rating'],
+          sizes: reqProduct.data()['sizes'],
+          subtitle: reqProduct.data()['subtitle'],
+          title: reqProduct.data()['title'],
+          // quantity: product.data()['quantity'],
+          // imageUrl: product.data()['imageUrl'],
           isFavorite: isFavorite,
         ));
       });
@@ -63,30 +148,18 @@ class Products with ChangeNotifier {
     return Future.value();
   }
 
-  // Future<void> addProduct(Product newProduct) async {
-  //   final response = await http.post(
-  //     "${AppURLs.BASE_API_URL}/products.json?auth=$_token",
-  //     body: json.encode({
-  //       'title': newProduct.title,
-  //       'description': newProduct.description,
-  //       'price': newProduct.price,
-  //       'quantity': newProduct.quantity,
-  //       'imageUrl': newProduct.imageUrl,
-  //     }),
-  //   );
+  ///
+  ////
+  ////
+  ///
+  ////
+  ///
+  /////
+  ///
+  ///
 
-  //   _items.add(Product(
-  //     id: json.decode(response.body)['name'],
-  //     title: newProduct.title,
-  //     description: newProduct.description,
-  //     price: newProduct.price,
-  //     quantity: newProduct.quantity,
-  //     imageUrl: newProduct.imageUrl,
-  //   ));
-  //   notifyListeners();
-  // }
-
-  Future<void> addProduct(newProduct) async {//, imagesSelectedList) async {
+  Future<void> addProduct(newProduct) async {
+    //, imagesSelectedList) async {
     await FirebaseFirestore.instance
         .collection('remottelyCompanies')
         .doc('tapanapanterahs') // .doc(product.companyTitle) //
@@ -115,7 +188,7 @@ class Products with ChangeNotifier {
       description: newProduct.description,
       price: newProduct.price,
       quantity: newProduct.quantity,
-      imageUrl: newProduct.imageUrl,
+      images: newProduct.images,
     ));
     notifyListeners();
   }
@@ -134,7 +207,7 @@ class Products with ChangeNotifier {
           'description': product.description,
           'price': product.price,
           'quantity': product.quantity,
-          'imageUrl': product.imageUrl,
+          'images': product.images,
         }),
       );
       _items[index] = product;

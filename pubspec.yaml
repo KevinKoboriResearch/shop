@@ -101,10 +101,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/product-placeholder.png
+    # - assets/images/product-placeholder.png
     - assets/images/
     - assets/logo/
     - assets/icon/
+    - images/
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -127,9 +128,24 @@ flutter:
     - family: Anton
       fonts:
         - asset: assets/fonts/Anton-Regular.ttf
+    - family: Anurati
+      fonts:
+        - asset: assets/fonts/Anurati-Regular.otf
+    - family: FlutterIcons
+      fonts:
+        - asset: assets/fonts/FlutterIcons.ttf
+    - family: RemottelyIcons
+      fonts:
+        - asset: assets/fonts/RemottelyIcons.ttf
     - family: MyFlutterApp
       fonts:
         - asset: assets/fonts/MyFlutterApp.ttf
+    - family: MyFlutterApp2
+      fonts:
+        - asset: assets/fonts/MyFlutterApp2.ttf
+    - family: Astronaut_PersonalUse
+      fonts:
+        - asset: assets/fonts/Astronaut_PersonalUse.otf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
@@ -140,3 +156,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+        
+flutter_icons:    
+  android: "launcher_icon"    
+  ios: true    
+  image_path: "assets/icon/icon.png" 
