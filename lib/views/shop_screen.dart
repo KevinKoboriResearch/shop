@@ -429,7 +429,7 @@ class _ShopScreenState extends State<ShopScreen>
                             (context, index) {
                               return CreationAwareListItem(
                                 itemCreated: () {
-                                  if (index % 2 == 0)
+                                  if (index % 6 == 0)
                                     productsProvider.requestMoreData();
                                 },
                                 child: ChangeNotifierProvider.value(

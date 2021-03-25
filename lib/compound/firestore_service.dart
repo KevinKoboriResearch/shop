@@ -30,7 +30,7 @@ class FirestoreService {
   // #6: Create a list that will keep the paged results
   List<List<Product>> _allPagedResults = List<List<Product>>();
 
-  static const int PostsLimit = 2;
+  static const int PostsLimit = 6;
 
   DocumentSnapshot _lastDocument;
   bool _hasMorePosts = true;
