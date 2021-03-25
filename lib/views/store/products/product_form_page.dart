@@ -18,7 +18,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // import 'package:shop/providers/products.dart';
-import 'package:shop/widgets/product/product_grid_item.dart';
+
 // import 'package:shop/widgets/badge.dart';
 // import 'package:shop/widgets/app_drawer.dart';
 // import 'package:shop/providers/cart.dart';
@@ -348,7 +348,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
             .collection('remottelyProducts')
             .doc(productRef.id)
             .set({
-          'productRef': productRef.path,
+          'productReference': productRef.path,
         });
       }
     } catch (error) {
@@ -905,7 +905,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                                         style: ProductStyles().inputTextStyle(),
                                         decoration: ProductStyles()
                                             .inputTextDecoration(
-                                                'Preço original',
+                                                'Preço atual',
                                                 'Valor do produto/serviço'),
                                         onFieldSubmitted: (_) {
                                           FocusScope.of(context).requestFocus(
@@ -935,8 +935,8 @@ class _ProductFormPageState extends State<ProductFormPage> {
                                         style: ProductStyles().inputTextStyle(),
                                         decoration: ProductStyles()
                                             .inputTextDecoration(
-                                                'Preço em promoção?',
-                                                'Insira o valor com desconto aqui!'),
+                                                'Preço original / valor antigo, sem promoção',
+                                                'Insira o valor sem o desconto aqui!'),
                                         onFieldSubmitted: (_) {
                                           FocusScope.of(context).requestFocus(
                                               _descriptionFocusNode);

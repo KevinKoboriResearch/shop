@@ -67,8 +67,10 @@ import 'package:shop/widgets/sign_up_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:shop/widgets/global/build_loading.dart';
-import 'package:shop/views/products/product_form_page.dart';
-
+import 'package:shop/views/store/products/product_form_page.dart';
+// import 'package:shop/libraries/rxdart/lib/rxdart.dart';
+import 'package:shop/views/store/products/favorites_products_page.dart';
+import "dart:convert";
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -97,6 +99,7 @@ class MyApp extends StatelessWidget {
               update: (ctx, auth, previousProducts) => new Products(
                 auth.token,
                 auth.userId,
+                previousProducts.busy,
                 previousProducts.items,
               ),
             ),
@@ -168,12 +171,14 @@ class MyApp extends StatelessWidget {
             //   highlightColor: Colors.transparent,
             //   splashColor: Colors.transparent,
             // ),
+            // home: AuthOrHomeScreen(),
             routes: {
               AppRoutes.AUTH_HOME: (ctx) => AuthOrHomeScreen(),
               AppRoutes.PRODUCT_DETAIL: (ctx) => ProductDetailScreen(),
               AppRoutes.CART: (ctx) => CartScreen(),
               AppRoutes.ORDERS: (ctx) => OrdersScreen(),
               AppRoutes.PRODUCTS: (ctx) => ProductsScreen(),
+                AppRoutes.FAVORITES: (ctx) => FavoritesProductsPage(),
               AppRoutes.PRODUCT_FORM: (ctx) => ProductFormPage(
                   'tapanapanterahs', 'Tabacos', null), //ProductFormScreen(),
             },

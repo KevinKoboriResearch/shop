@@ -1,95 +1,82 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shop/providers/product.dart';
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/product_model.dart';
-import '../providers/product.dart';
-import 'package:flutter/services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+class ProductsCollection {
+  final _auth = FirebaseAuth.instance.currentUser;
 
-class FirestoreService {
-  // final _auth = FirebaseAuth.instance.currentUser;
-
-  final CollectionReference _postsCollectionReference = Firestore.instance
+  final CollectionReference _productsCollectionReference = FirebaseFirestore.instance
       .collection('remottelyCompanies')
       .doc('tapanapanterahs') // .doc(product.companyTitle) //
       .collection('productCategories')
       .doc('Tabacos') //.doc(product.categoryTitle) //
       .collection('products');
 
-  // final favMap = FirebaseFirestore.instance
-  //     .collection('users')
-  //     .doc(FirebaseAuth.instance.currentUser.uid) // .doc(product.companyTitle) //
-  //     .collection('favorites')
-  //     // .where('isFavorite', isEqualTo: id)
-  //     // .where('oi', isEqualTo: 'oi')
-  //     .get();
-
-  final StreamController<List<Product>> _postsController =
+  final StreamController<List<Product>> _productsController =
       StreamController<List<Product>>.broadcast();
 
   // #6: Create a list that will keep the paged results
-  List<List<Product>> _allPagedResults = List<List<Product>>();
+  List<List<Product>> _allPagedResults = [];
 
-  static const int PostsLimit = 6;
+  static const int ProductsLimit = 6;
 
   DocumentSnapshot _lastDocument;
-  bool _hasMorePosts = true;
+  bool _hasMoreProducts = true;
 
-  Stream listenToPostsRealTime() {
-    // Register the handler for when the posts data changes
-    _requestPosts();
-    return _postsController.stream;
+  Stream listenToProductsRealTime() {
+    // Register the handler for when the products data changes
+    _requestProducts();
+    return _productsController.stream;
   }
 
-  // #1: Move the request posts into it's own function
-  void _requestPosts() {
+  // #1: Move the request products into it's own function
+  void _requestProducts() {
     // #2: split the query from the actual subscription
-    var pagePostsQuery = _postsCollectionReference
+    var pageProductsQuery = _productsCollectionReference
         .orderBy('title')
         // #3: Limit the amount of results
-        .limit(PostsLimit);
+        .limit(ProductsLimit);
 
     // #5: If we have a document start the query after it
     if (_lastDocument != null) {
-      pagePostsQuery = pagePostsQuery.startAfterDocument(_lastDocument);
+      pageProductsQuery = pageProductsQuery.startAfterDocument(_lastDocument);
     }
 
-    if (!_hasMorePosts) return;
+    if (!_hasMoreProducts) return;
 
     // #7: Get and store the page index that the results belong to
     var currentRequestIndex = _allPagedResults.length;
 
-    pagePostsQuery.snapshots().listen((postsSnapshot) async {
-      if (postsSnapshot.documents.isNotEmpty) {
-        List<Product> posts = postsSnapshot.documents
+    pageProductsQuery.snapshots().listen((productsSnapshot) async {
+      if (productsSnapshot.docs.isNotEmpty) {
+        List<Product> products = productsSnapshot.docs
             .map((snapshot) =>
-                Product.fromMap(snapshot.data(), snapshot.documentID))
+                Product.fromMap(snapshot.data(), snapshot.id))
             .where((mappedItem) => mappedItem.title != null)
             .toList();
 
         final favMap = await FirebaseFirestore.instance
             .collection('users')
-            .doc(FirebaseAuth.instance.currentUser.uid)
+            .doc(_auth.uid)
             .collection('favorites')
             .get();
 
-        List<Product> newPosts = [];
-        if (posts != null) {
-          posts.forEach((reqProduct) {
+        List<Product> newProducts = [];
+        
+        if (products != null) {
+          products.forEach((reqProduct) {
+
             var isFavorite = false;
+            
             favMap.docs.forEach((element) {
-              print('EEEEEEEEEEEE >>>>>>> >>>>>>>>> >>>>>> ' +
-                  element.id.toString());
-              print('GGGGGGGGGGGG >>>>>>> >>>>>>>>> >>>>>> ' +
-                  reqProduct.id.toString());
               if (element.id.toString() == reqProduct.id.toString()) {
                 isFavorite = true;
                 return;
               }
             });
-            print('AAAAAAAAAAAAAAAAAAA >>>>>>> >>>>>>>>> >>>>>> ' +
-                isFavorite.toString());
-            newPosts.add(Product(
+
+            newProducts.add(Product(
               id: reqProduct.id,
               coin: reqProduct.coin,
               companyTitle: reqProduct.companyTitle,
@@ -113,32 +100,36 @@ class FirestoreService {
         // #8: Check if the page exists or not
         var pageExists = currentRequestIndex < _allPagedResults.length;
 
-        // #9: If the page exists update the posts for that page
+        // #9: If the page exists update the products for that page
         if (pageExists) {
-          _allPagedResults[currentRequestIndex] = newPosts;
+          _allPagedResults[currentRequestIndex] = newProducts;
         }
         // #10: If the page doesn't exist add the page data
         else {
-          _allPagedResults.add(newPosts);
+          _allPagedResults.add(newProducts);
         }
 
         // #11: Concatenate the full list to be shown
-        var allPosts = _allPagedResults.fold<List<Product>>(List<Product>(),
+        var allProducts = _allPagedResults.fold<List<Product>>([],
             (initialValue, pageItems) => initialValue..addAll(pageItems));
 
-        // #12: Broadcase all posts
-        _postsController.add(allPosts);
+        // #12: Broadcase all products
+        _productsController.add(allProducts);
 
         // #13: Save the last document from the results only if it's the current last page
         if (currentRequestIndex == _allPagedResults.length - 1) {
-          _lastDocument = postsSnapshot.documents.last;
+          _lastDocument = productsSnapshot.docs.last;
         }
 
-        // #14: Determine if there's more posts to request
-        _hasMorePosts = newPosts.length == PostsLimit;
+        // #14: Determine if there's more products to request
+        _hasMoreProducts = newProducts.length == ProductsLimit;
       }
     });
   }
 
-  void requestMoreData() => _requestPosts();
+  void requestMoreData() => _requestProducts();
+
+  ///////////////////////////////////////////////////////////////////////
+  
+
 }

@@ -9,7 +9,7 @@ import '../utils/app_routes.dart';
 class ProductsScreen extends StatelessWidget {
 
   Future<void> _refreshProducts(BuildContext context) {
-    return Provider.of<Products>(context, listen: false).loadProducts();
+    // return Provider.of<Products>(context, listen: false).loadProducts();
   }
 
   @override

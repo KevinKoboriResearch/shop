@@ -56,18 +56,18 @@ class ProductItem extends StatelessWidget {
                     ],
                   ),
                 ).then((value) async {
-                  if (value) {
-                    try {
-                      await Provider.of<Products>(context, listen: false)
-                          .deleteProduct(product.id);
-                    } on HttpException catch (error) {
-                      scaffold.showSnackBar(
-                        SnackBar(
-                          content: Text(error.toString()),
-                        ),
-                      );
-                    }
-                  }
+                  // if (value) {
+                  //   try {
+                  //     await Provider.of<Products>(context, listen: false)
+                  //         .deleteProduct(product.id);
+                  //   } on HttpException catch (error) {
+                  //     scaffold.showSnackBar(
+                  //       SnackBar(
+                  //         content: Text(error.toString()),
+                  //       ),
+                  //     );
+                  //   }
+                  // }
                 });
               },
             ),

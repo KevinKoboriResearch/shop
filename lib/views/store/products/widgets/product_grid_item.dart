@@ -37,10 +37,8 @@ import 'package:shop/providers/product.dart';
 // import 'package:shop/utils/app_routes.dart';
 
 class ProductGridItem extends StatefulWidget {
-  // final product;
-  // ProductGridItem(this.product);
-  // final product;
-  // ProductGridItem(this.product);
+  final String pageType;
+  ProductGridItem(this.pageType);
   @override
   _ProductGridItemState createState() => _ProductGridItemState();
 }
@@ -107,7 +105,6 @@ class _ProductGridItemState extends State<ProductGridItem> {
                                         ProductFunctions()
                                             .doubleValueToCurrency(
                                                 product.price),
-                                        //acima de tanto, remover os centavos?
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
@@ -121,7 +118,7 @@ class _ProductGridItemState extends State<ProductGridItem> {
                                         'R\$ ' +
                                             ProductFunctions()
                                                 .doubleValueToCurrency(product
-                                                    .price), //acima de tanto, remover os centavos?
+                                                    .price),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
@@ -135,7 +132,7 @@ class _ProductGridItemState extends State<ProductGridItem> {
                                     ' / R\$ ' +
                                         ProductFunctions()
                                             .doubleValueToCurrency(product
-                                                .promotion), //'/${currencyPromotion}', //acima de tanto, remover os centavos?
+                                                .promotion),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -156,152 +153,18 @@ class _ProductGridItemState extends State<ProductGridItem> {
                 child: Consumer<Product>(builder: (ctx, product, _) {
                   return InkWell(
                     onTap: () async {
-                      // value = !value;
-                      product.toggleFavorite();
-                      // try {
-                      //   if (value) {
-                      //     await FirebaseFirestore.instance
-                      //         .collection("users")
-                      //         .doc(_auth.currentUser.uid)
-                      //         .collection("favorites")
-                      //         .doc(product.id)
-                      //         .update({
-                      //       "docRef":
-                      //           "companies/bwBiNTo7yOIUYehamSmD/products/7oGf33sgfZvPHh4kgvah",
-                      //     });
-                      //     setState(() {
-                      //       value;
-                      //     });
-                      //   } else {
-                      //     await FirebaseFirestore.instance
-                      //         .collection("users")
-                      //         .doc(_auth.currentUser.uid)
-                      //         .collection("favorites")
-                      //         .doc(product.id)
-                      //         .delete();
-                      //     setState(() {
-                      //       value;
-                      //     });
-                      //   }
-                      // } catch (error) {
-                      //   showModalBottomSheet(
-                      //     context: context,
-                      //     builder: (_) => Container(
-                      //       height: 140,
-                      //       child: Column(
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         children: [Text('error: ' + error)],
-                      //       ),
-                      //     ),
-                      //   );
-                      // } finally {}
+                      product.toggleFavorite(ctx, widget.pageType,
+                          'remottelyCompanies/${product.companyTitle}/productCategories/${product.categoryTitle}/products/${product.id}');
                     },
                     child: Icon(
-                      product.isFavorite ? Icons.bookmark : Icons.bookmark_border,
+                      product.isFavorite
+                          ? Icons.bookmark
+                          : Icons.bookmark_border,
                       size: 26,
                     ),
                   );
                 }
-                    // Padding(
-                    //   // padding:
-                    //   //     EdgeInsets.all(product.isFavorite ? 0.0 : 2.0),
-                    //   child: IconButton(
-                    //     splashColor: Colors.transparent,
-                    //     hoverColor: Colors.transparent,
-                    //     focusColor: Colors.transparent,
-                    //     // icon: Icon(
-                    //     //   product.isFavorite
-                    //     //       ? MyFlutterApp.lock_outline
-                    //     //       : MyFlutterApp.subdirectory_arrow_left,
-                    //       // size: product.isFavorite ? 16 : 12,
-                    //     // ),
-                    //     // iconSize: product.isFavorite ? 28 : 22,
-                    //     color: Theme.of(context).accentColor,
-                    //     onPressed: () {
-                    //       product.toggleFavorite();
-                    //     },
-                    //   ),
-                    // ),
                     ),
-                // Consumer<Product>(
-                //   builder: (ctx, consumeProduct, _) {
-
-                //   Padding(
-                //     padding: EdgeInsets.all(consumeProduct.isFavorite ? 0.0 : 2.0),
-                //     child: InkWell(
-                //       onTap: () async {
-                //         value = !value;
-                //       },
-                //       child: Icon(
-                //         value ? Icons.bookmark : Icons.bookmark_border,
-                //         size: 26,
-                //       ),
-                //     )
-                //     // IconButton(
-                //     //   splashColor: Colors.transparent,
-                //     //   hoverColor: Colors.transparent,
-                //     //   focusColor: Colors.transparent,
-                //     //   icon: Icon(
-                //     //     product.isFavorite
-                //     //         ? MyFlutterApp.bag
-                //     //         : MyFlutterApp.bookmark,
-                //     //     size: product.isFavorite ? 16 : 12,
-                //     //   ),
-                //     //   iconSize: product.isFavorite ? 28 : 22,
-                //     //   color: Theme.of(context).accentColor,
-                //     //   onPressed: () {
-                //     //     product.toggleFavorite();
-                //     //   },
-                //     // ),
-                //   }
-                //   ),
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     value = !value;
-                //     try {
-                //       if (value) {
-                //         await FirebaseFirestore.instance
-                //             .collection("users")
-                //             .doc(_auth.currentUser.uid)
-                //             .collection("favorites")
-                //             .doc(product.id)
-                //             .update({
-                //           "docRef":
-                //               "companies/bwBiNTo7yOIUYehamSmD/products/7oGf33sgfZvPHh4kgvah",
-                //         });
-                //         setState(() {
-                //           value;
-                //         });
-                //       } else {
-                //         await FirebaseFirestore.instance
-                //             .collection("users")
-                //             .doc(_auth.currentUser.uid)
-                //             .collection("favorites")
-                //             .doc(product.id)
-                //             .delete();
-                //         setState(() {
-                //           value;
-                //         });
-                //       }
-                //     } catch (error) {
-                //       showModalBottomSheet(
-                //         context: context,
-                //         builder: (_) => Container(
-                //           height: 140,
-                //           child: Column(
-                //             crossAxisAlignment: CrossAxisAlignment.start,
-                //             children: [Text('error: ' + error)],
-                //           ),
-                //         ),
-                //       );
-                //     } finally {}
-                //   },
-                //   child: Icon(
-                //     value ? Icons.bookmark : Icons.bookmark_border,
-                //     size: 26,
-                //   ),
-                // ),
               ),
             ],
           ),

@@ -82,6 +82,7 @@ dependencies:
   flutter_masked_text2: ^0.9.1
   scoped_model: ^1.0.1
   websafe_svg: ^1.1.4+2
+  rxdart_codemod: ^0.1.5
 
 dev_dependencies:
   flutter_test:

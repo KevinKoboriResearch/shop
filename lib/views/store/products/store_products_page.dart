@@ -1,7 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // import 'package:shop/providers/products.dart';
-import 'package:shop/widgets/product/product_grid_item.dart';
+import 'package:shop/views/store/products/widgets/product_grid_item.dart';
 // import 'package:shop/widgets/badge.dart';
 // import 'package:shop/widgets/app_drawer.dart';
 // import 'package:shop/providers/cart.dart';
@@ -77,17 +78,17 @@ import 'package:flutter/material.dart';
 // import 'package:shop/eCommerce/e_com_item_description.dart';
 // import 'package:shop/models/product_item.dart';
 
-// import '../k_padding.dart';
-// import '../responsive.dart';
+// import 'package:shop/k_padding.dart';
+// import 'package:shop/responsive.dart';
 // import 'items/categories.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/providers/products.dart';
-import '../widgets/badge.dart';
-import '../widgets/app_drawer.dart';
-import '../providers/cart.dart';
-import '../utils/app_routes.dart';
-import '../utils/my_flutter_app_icons.dart';
+import 'package:shop/widgets/badge.dart';
+import 'package:shop/widgets/app_drawer.dart';
+import 'package:shop/providers/cart.dart';
+import 'package:shop/utils/app_routes.dart';
+import 'package:shop/utils/my_flutter_app_icons.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:math' as math;
@@ -105,74 +106,103 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// import '../widgets/product_grid_item.dart';
-import '../providers/products.dart';
+// import 'package:shop/widgets/product_grid_item.dart';
+import 'package:shop/providers/products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/providers/auth.dart';
-import '../providers/product.dart';
-import '../providers/cart.dart';
-import '../utils/app_routes.dart';
-import '../compound/creation_aware_list_item.dart';
+import 'package:shop/providers/product.dart';
+import 'package:shop/providers/cart.dart';
+import 'package:shop/utils/app_routes.dart';
+import 'package:shop/data/creation_aware_list_item.dart';
+import 'package:shop/utils/app_routes.dart';
 // import 'items/e_commerce_item.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop/providers/auth.dart';
+import 'package:flutter/material.dart';
+import 'package:shop/utils/constants.dart';
+// import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:shop/functions/get_initials.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
+import 'package:shop/exceptions/auth_exception.dart';
+// import 'package:shop/functions/flushbar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shop/utils/constants.dart';
+// import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:provider/provider.dart';
+import 'package:shop/providers/auth.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+// import './auth_screen.dart';
+// import './products_overview_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+// import 'package:shop/router/shop_app_state.dart';
+// import 'package:shop/views/control/app_shell.dart';
+// import 'package:shop/router/routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shop/providers/google_sign_in.dart';
+import 'package:shop/widgets/sign_up_widget.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:shop/widgets/global/build_loading.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+// import 'package:shop/router/shop_app_state.dart';
+// import 'package:shop/views/control/app_shell.dart';
+// import 'package:shop/router/routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shop/providers/google_sign_in.dart';
+import 'package:shop/widgets/sign_up_widget.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:shop/widgets/global/build_loading.dart';
+
+import 'package:shop/views/store/products/favorites_products_page.dart';
 
 enum FilterOptions {
   Favorite,
   All,
 }
 
-class ShopScreen extends StatefulWidget {
-  // const ShopScreen({
+class StorePage extends StatefulWidget {
+  // const StorePage({
   //   Key key,
   // }) : super(key: key);
   @override
-  _ShopScreenState createState() => _ShopScreenState();
+  _StorePageState createState() => _StorePageState();
 }
 
-class _ShopScreenState extends State<ShopScreen>
+class _StorePageState extends State<StorePage>
     with SingleTickerProviderStateMixin {
-  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  bool _showFavoriteOnly = false;
-  bool _isLoading = true;
+  // bool _showFavoriteOnly = false;
   final auth = FirebaseAuth.instance;
+
   @override
   void initState() {
     super.initState();
-    Provider.of<Products>(context, listen: false).listenToPosts();
-    // loadProducts().then((_) {
-    //   setState(() {
-    //     _isLoading = false;
-    //   });
-    // });
+    Provider.of<Products>(context, listen: false).listenToProducts();
   }
 
   void _refreshProducts(BuildContext context) {
-    return Provider.of<Products>(context, listen: false).listenToPosts();
+    return Provider.of<Products>(context, listen: false).listenToProducts();
   }
-
-  //  Future<void> _refreshProducts(BuildContext context) {
-  //   return Provider.of<Products>(context, listen: false).loadProducts();
-  // }
 
   @override
   Widget build(BuildContext context) {
     final productsProvider = Provider.of<Products>(context);
-    // final products = showFavoriteOnly
-    //     ? productsProvider.favoriteItems
-    //     : productsProvider.items;
-    // final products = productsProvider.items;
-    // final DrawerProvider drawerProvider = Provider.of(context);
-    // drawerProvider.pageIndex;
+    final products = productsProvider.items;
+
     return Scaffold(
-      // key: _scaffoldKey,
-      // backgroundColor: Colors.grey[100],
-      // drawer: CustomDrawer(),
       extendBody: true,
-      drawer: AppDrawer(),
+      endDrawer: AppDrawer(),
       body: Builder(
         builder: (context) {
           return SafeArea(
-            child: productsProvider.items == null
+            child: products == null
                 ? Stack(
                     fit: StackFit.expand,
                     children: [
@@ -281,9 +311,10 @@ class _ShopScreenState extends State<ShopScreen>
                         snap: true,
                         backgroundColor: Colors.white,
                         elevation: 0.0,
-                        toolbarHeight: 46,
+                        toolbarHeight: 48,
                         expandedHeight: 46,
                         leading: Container(),
+                        actions: [Container()],
                         leadingWidth: 0,
                         flexibleSpace: FlexibleSpaceBar(
                           centerTitle: false,
@@ -291,10 +322,10 @@ class _ShopScreenState extends State<ShopScreen>
                               EdgeInsets.fromLTRB(14.0, 0.0, 12.0, 0.0),
                           title: Row(
                             children: [
-                              Text('Loja', // snapshotProducts.hasData
-                                  //     ? snapshotProducts.data.docs[0]
-                                  //         ['companyTitle']
-                                  //     : '',
+                              Text(
+                                  products != []
+                                      ? products[0].companyTitle
+                                      : '',
                                   style: TextStyle(
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
@@ -302,24 +333,30 @@ class _ShopScreenState extends State<ShopScreen>
                               Spacer(),
                               InkWell(
                                 onTap: () {
-                                  // toggleDrawer();
-                                  Scaffold.of(context).openDrawer();
+                                  // setState(() {
+                                  //   _showFavoriteOnly = !_showFavoriteOnly;
+                                  // });
+                                  Navigator.of(context).pushNamed(
+                                    AppRoutes.FAVORITES,
+                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) =>
+                                  //           FavoritesProductsPage()),
+                                  // );
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.fromLTRB(
-                                      0.0, 8.0, 0.0, 0.0),
+                                      8.0, 8.0, 8.0, 0.0),
                                   child: Transform(
                                     alignment: Alignment.center,
                                     transform: Matrix4.rotationY(math.pi),
                                     child: Icon(
-                                      MyFlutterApp.bookmark,
-                                      size: 20,
+                                      Icons.bookmark_border,
                                     ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 16,
                               ),
                               InkWell(
                                 onTap: () {
@@ -328,11 +365,14 @@ class _ShopScreenState extends State<ShopScreen>
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.fromLTRB(
-                                      0.0, 6.0, 0.0, 0.0),
+                                      8.0, 8.0, 8.0, 0.0),
                                   child: Transform(
                                     alignment: Alignment.center,
                                     transform: Matrix4.rotationY(math.pi),
-                                    child: Icon(MyFlutterApp.remottely_menu),
+                                    child: Icon(
+                                      MyFlutterApp.remottely_basket,
+                                      // size: 20,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -386,71 +426,78 @@ class _ShopScreenState extends State<ShopScreen>
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
-                              children:
-                                  List.generate(productsProvider.items.length,
-                                      // categories.length,
-                                      (index) {
+                              children: List.generate(products.length,
+                                  // categories.length,
+                                  (index) {
                                 return Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      14.0, 0, 0, 8.0),
-                                  child: OutlineButton(
-                                      child: new Text(
-                                        productsProvider.items[index].title,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
+                                  padding: EdgeInsets.fromLTRB(
+                                      index == 0.0 ? 14.0 : 4.0,
+                                      0.0,
+                                      index == products.length - 1 ? 14.0 : 0.0,
+                                      0.0),
+                                  child: OutlinedButton(
+                                    child: new Text(
+                                      products[index].title,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    onPressed: null,
+                                    style: OutlinedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                      onPressed: null,
-                                      shape: new RoundedRectangleBorder(
-                                          borderRadius:
-                                              new BorderRadius.circular(
-                                                  10.0))),
+                                    ),
+                                    // clipBehavior: Clip.values(CupertinoIcons.textformat_123),
+                                  ),
                                 );
                               }),
                             ),
                           ),
                         ),
                       ),
-
-                      SliverPadding(
-                        padding: EdgeInsets.fromLTRB(
-                          8.0,
-                          0.0,
-                          8.0,
-                          8.0,
-                        ),
-                        sliver: SliverGrid(
-                          gridDelegate:
-                              SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 210,
-                            childAspectRatio: 0.77,
-                          ),
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                              return CreationAwareListItem(
-                                itemCreated: () {
-                                  if (index % 6 == 0)
-                                    productsProvider.requestMoreData();
-                                },
-                                child: ChangeNotifierProvider.value(
-                                  value: productsProvider.items[index],
-                                  child: ProductGridItem(),
+                      SliverToBoxAdapter(child: SizedBox(height: 8.0)),
+                      products.length == 0
+                          ? SliverToBoxAdapter(
+                              child: Container(
+                                height:
+                                    MediaQuery.of(context).size.height - 200,
+                                child: Center(
+                                  child: CircularProgressIndicator(),
                                 ),
-                              );
-                              // snapshotproductsProvider.itemsdata.docs[index]);
-
-                              //Container(height: 100, color: Colors.red);
-                              // return ChangeNotifierProvider.value(
-                              //   value: products[index],
-                              //   child: ProductGridItem(),
-                              // );
-                            },
-                            childCount: productsProvider.items.length,
-                            // snapshotProducts.data.docs
-                            //     .length, //products.length, // widget.snapshotProducts.data.docs.length,
-                          ),
-                        ),
-                      ),
+                              ),
+                            )
+                          : SliverPadding(
+                              padding: EdgeInsets.fromLTRB(
+                                8.0,
+                                0.0,
+                                8.0,
+                                8.0,
+                              ),
+                              sliver: SliverGrid(
+                                gridDelegate:
+                                    SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 203,
+                                  childAspectRatio: 0.78,
+                                ),
+                                delegate: SliverChildBuilderDelegate(
+                                  (context, index) {
+                                    return CreationAwareListItem(
+                                      itemCreated: () {
+                                        if (index % 6 == 0)
+                                          productsProvider
+                                              .requestMoreCompanyProductsData();
+                                      },
+                                      child: ChangeNotifierProvider.value(
+                                        value: products[index],
+                                        child: ProductGridItem('store'),
+                                      ),
+                                    );
+                                  },
+                                  childCount: products.length,
+                                ),
+                              ),
+                            ),
                     ],
                   ),
             // },
