@@ -83,7 +83,8 @@ dependencies:
   scoped_model: ^1.0.1
   websafe_svg: ^1.1.4+2
   rxdart_codemod: ^0.1.5
-
+  flutter_svg: ^0.19.1 # help us to use SVG in our app
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -106,6 +107,7 @@ flutter:
     - assets/images/
     - assets/logo/
     - assets/icon/
+    - assets/icons/
     - images/
   #  - images/a_dot_ham.jpeg
 
@@ -121,20 +123,27 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Lato
+    - family: Muli
       fonts:
-        - asset: assets/fonts/Lato-Regular.ttf
-        - asset: assets/fonts/Lato-Bold.ttf
+        - asset: assets/fonts/muli/Muli.ttf
+        - asset: assets/fonts/muli/Muli-Bold.ttf
           weight: 700
-    - family: Anton
-      fonts:
-        - asset: assets/fonts/Anton-Regular.ttf
-    - family: Anurati
-      fonts:
-        - asset: assets/fonts/Anurati-Regular.otf
-    - family: FlutterIcons
-      fonts:
-        - asset: assets/fonts/FlutterIcons.ttf
+        - asset: assets/fonts/muli/Muli-Light.ttf
+          weight: 300
+    # - family: Lato
+    #   fonts:
+    #     - asset: assets/fonts/Lato-Regular.ttf
+    #     - asset: assets/fonts/Lato-Bold.ttf
+    #       weight: 700
+    # - family: Anton
+    #   fonts:
+    #     - asset: assets/fonts/Anton-Regular.ttf
+    # - family: Anurati
+    #   fonts:
+    #     - asset: assets/fonts/Anurati-Regular.otf
+    # - family: FlutterIcons
+    #   fonts:
+    #     - asset: assets/fonts/FlutterIcons.ttf
     - family: RemottelyIcons
       fonts:
         - asset: assets/fonts/RemottelyIcons.ttf
