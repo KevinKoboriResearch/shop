@@ -1,76 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop/utils/custom_route.dart';
+import 'package:shop/app/utils/custom_route.dart';
 
-import './utils/app_routes.dart';
+import 'package:shop/app/utils/app_routes.dart';
 
-import './views/auth_home_screen.dart';
-// import './views/products_overview_screen.dart';
-import './views/product_detail_screen.dart';
-import './views/cart_screen.dart';
-import './views/orders_screen.dart';
-import './views/products_screen.dart';
+import 'package:shop/ui/views/auth_home_screen.dart';
+import 'package:shop/ui/views/product_detail_screen.dart';
+import 'package:shop/ui/views/cart_screen.dart';
+import 'package:shop/ui/views/orders_screen.dart';
+import 'package:shop/ui/views/products_screen.dart';
 
-import './providers/products.dart';
-import './providers/cart.dart';
-import './providers/orders.dart';
-import './providers/auth.dart';
-import 'package:shop/utils/constants.dart';
-import 'package:flutter/material.dart';
+import 'package:shop/app/providers/products.dart';
+import 'package:shop/app/providers/cart.dart';
+import 'package:shop/app/providers/orders.dart';
+import 'package:shop/app/providers/auth.dart';
 import 'package:flutter/services.dart';
-// import 'package:shop/views/control/auth_app_page.dart';
-// import 'package:remottely/views/device/device_detail_page.dart';
-// import 'package:remottely/views/device/devices_manage_page_list.dart';
-// import 'package:remottely/views/device/device_form_page.dart';
-// import 'package:remottely/utils/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
-// final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-// import 'package:remottely/utils/constants.dart';
-// import 'package:remottely/views/control/auth_screen.dart';
-// import 'package:remottely/widgets/design/dot_indicator_widget.dart';
-// import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-// import 'package:remottely/utils/my_flutter_app_icons.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-// import 'package:remottely/views/control/marketing_page.dart';
-// import 'package:remottely/views/control/block_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase/firebase.dart';
-// import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-
-// import 'package:remottely/views/device/devices_page_list.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter/services.dart';
-// import 'package:remottely/views/device/device_detail_page.dart';
-// import 'package:remottely/views/device/device_form_page.dart';
-// import 'package:remottely/providers/auth_provider.dart';
-// import 'package:remottely/utils/constants.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-// import 'package:remottely/views/control/marketing_page.dart';
-// import 'package:remottely/views/control/block_page.dart';
-// import 'package:remottely/views/device/devices_page_list.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
-// import 'package:shop/router/shop_app_state.dart';
-// import 'package:shop/views/control/app_shell.dart';
-// import 'package:shop/router/routes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shop/providers/google_sign_in.dart';
-import 'package:shop/widgets/sign_up_widget.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:shop/widgets/global/build_loading.dart';
-import 'package:shop/views/store/products/product_form_page.dart';
-// import 'package:shop/libraries/rxdart/lib/rxdart.dart';
-import 'package:shop/views/store/products/favorites_products_page.dart';
-import "dart:convert";
+import 'package:shop/app/providers/google_sign_in.dart';
+import 'package:shop/ui/views/store/products/product_form_page.dart';
+// import 'package:shop/app/libraries/rxdart/lib/rxdart.dart';
+import 'package:shop/ui/views/store/products/favorites_products_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -91,9 +40,9 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(
               create: (_) => new Auth(),
             ),
-            // ChangeNotifierProvider(
-            //   create: (_) => new GoogleSignInProvider(),
-            // ),
+            ChangeNotifierProvider(
+              create: (_) => new GoogleSignInProvider(),
+            ),
             ChangeNotifierProxyProvider<Auth, Products>(
               create: (_) => new Products(),
               update: (ctx, auth, previousProducts) => new Products(
@@ -123,7 +72,7 @@ class MyApp extends StatelessWidget {
               brightness: Brightness.light,
               // hoverColor: Colors.orange,
               splashColor: Colors.white,
-              primaryColor: Colors.white,
+              primaryColor: Colors.black,
               dividerColor: Colors.grey[100],
               accentColor: Colors.deepOrange,
               fontFamily: 'Lato',
