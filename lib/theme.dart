@@ -28,6 +28,9 @@ InputDecorationTheme inputDecorationTheme() {
     enabledBorder: outlineInputBorder,
     focusedBorder: outlineInputBorder,
     border: outlineInputBorder,
+    focusColor: Colors.red,
+    fillColor: Colors.red,
+    hoverColor: Colors.red,
   );
 }
 

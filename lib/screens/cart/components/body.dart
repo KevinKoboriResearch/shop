@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:shop_app/models/Cart.dart';
-
+// import 'package:shop_app/models/Cart.dart';
+import 'package:shop_app/app/providers/cart.dart';
 import '../../../size_config.dart';
 import 'cart_card.dart';
 
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+// import 'package:shop_app/widgets/cart_item_widget.dart';
+import 'package:shop_app/app/providers/cart.dart';
+import 'package:shop_app/app/providers/orders.dart';
+import 'package:shop_app/app/utils/my_flutter_app_icons.dart';
 class Body extends StatefulWidget {
+  final cartItems;
+  Body(this.cartItems);
   @override
   _BodyState createState() => _BodyState();
 }
@@ -17,15 +26,17 @@ class _BodyState extends State<Body> {
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
       child: ListView.builder(
-        itemCount: demoCarts.length,
+        itemCount:  widget.cartItems.length,
         itemBuilder: (context, index) => Padding(
           padding: EdgeInsets.symmetric(vertical: 10),
           child: Dismissible(
-            key: Key(demoCarts[index].product.id.toString()),
+            key: Key( widget.cartItems[index].id.toString()),//product.id.toString()),
             direction: DismissDirection.endToStart,
             onDismissed: (direction) {
               setState(() {
-                demoCarts.removeAt(index);
+                //  widget.cartItems.removeAt(index);
+                 Provider.of<Cart>(context, listen: false)
+            .removeItem(widget.cartItems[index].productId);
               });
             },
             background: Container(
@@ -41,7 +52,7 @@ class _BodyState extends State<Body> {
                 ],
               ),
             ),
-            child: CartCard(cart: demoCarts[index]),
+            child: CartCard(cartItem:  widget.cartItems[index]),
           ),
         ),
       ),

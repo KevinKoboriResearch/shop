@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/profile/profile_screen.dart';
-
+import 'package:shop_app/screens/store/products/store_products_page.dart';
+import 'package:shop_app/screens/store/products/favorites_products_page.dart';
 import '../constants.dart';
 import '../enums.dart';
 import 'package:shop_app/size_config.dart';
@@ -52,18 +53,33 @@ class CustomBottomNavBar extends StatelessWidget {
               ),
               IconButton(
                 icon: SvgPicture.asset("assets/icons/Heart Icon.svg"),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => StorePage()),
+                  );
+                },
               ),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/Chat bubble Icon.svg"),
-                onPressed: () {},
+                icon: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: SvgPicture.asset("assets/ui_icons/svg/124-cube.svg",
+                   color: inActiveIconColor,//
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FavoritesProductsPage()),
+                  );
+                },
               ),
               IconButton(
-                icon: SvgPicture.asset(
-                  "assets/icons/User Icon.svg",
-                  color: MenuState.profile == selectedMenu
-                      ? kPrimaryColor
-                      : inActiveIconColor,
+                icon: Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: SvgPicture.asset("assets/ui_icons/svg/097-user.svg",
+                   color: inActiveIconColor,//"assets/icons/Chat bubble Icon.svg",
+                  ),
                 ),
                 onPressed: () =>
                     Navigator.pushNamed(context, ProfileScreen.routeName),
