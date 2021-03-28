@@ -78,7 +78,7 @@ class Products with ChangeNotifier {
 
     _productsService.listenToProductsRealTime().listen((productsData) {
       List<Product> updatedProducts = productsData;
-      if (updatedProducts != null && updatedProducts.length > 0) {
+      if (updatedProducts != null) {
         _items = updatedProducts;
         notifyListeners();
       }
@@ -101,10 +101,10 @@ class Products with ChangeNotifier {
         .listenToUserFavoriteProductsRealTime()
         .listen((productsData) {
       List<Product> updatedProducts = productsData;
-      // if (updatedProducts != null && updatedProducts.length > 0) {
+      if (updatedProducts != null) {
         _favoriteItems = updatedProducts;
         notifyListeners();
-      // }
+      }
       // else {
       //   _favoriteItems = [];
       //   notifyListeners();

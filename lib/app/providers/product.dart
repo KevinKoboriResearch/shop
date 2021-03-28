@@ -108,6 +108,39 @@ class Product with ChangeNotifier {
       BuildContext context, String type, String productRef) async {
     _toggleFavorite();
 
+    if (type == 'favorites') {
+      final productsProvider = Provider.of<Products>(context, listen: false);
+
+      // if (productsProvider.favoriteItems.length == 1) {
+      //   List<Product> val = [];
+      //   productsProvider.setFavoriteItems(val);
+      //   notifyListeners();
+      // } else {
+      // if (productsProvider.favoriteItems.length == 1) {
+      //   List<Product> val = [];
+      //   // productsProvider.setFavoriteItems(val);
+      //   productsProvider.setItems(val);
+
+      //   notifyListeners();
+
+      // } else {
+
+      List<Product> oldProductsList = productsProvider.items;
+
+      var oldProductIndex = oldProductsList.indexWhere((element) {
+        return element.id == id;
+      });
+      if (oldProductIndex != null) {
+        var oldProductItem = oldProductsList.elementAt(oldProductIndex);
+        oldProductItem.isFavorite = false;
+        oldProductsList.replaceRange(
+            oldProductIndex, oldProductIndex + 1, [oldProductItem]);
+
+        productsProvider.setItems(oldProductsList);
+        notifyListeners();
+      }
+    }
+
     try {
       if (isFavorite == true) {
         await FirebaseFirestore.instance
@@ -128,38 +161,5 @@ class Product with ChangeNotifier {
     } catch (error) {
       _toggleFavorite();
     }
-
-    // if (type == 'favorites') {
-    //   final productsProvider = Provider.of<Products>(context, listen: false);
-
-    //   // if (productsProvider.favoriteItems.length == 1) {
-    //   //   List<Product> val = [];
-    //   //   productsProvider.setFavoriteItems(val);
-    //   //   notifyListeners();
-    //   // } else {
-    //   // if (productsProvider.favoriteItems.length == 1) {
-    //   //   List<Product> val = [];
-    //   //   // productsProvider.setFavoriteItems(val);
-    //   //   productsProvider.setItems(val);
-
-    //   //   notifyListeners();
-
-    //   // } else {
-
-    //   List<Product> oldProductsList = productsProvider.items;
-
-    //   var oldProductIndex = oldProductsList.indexWhere((element) {
-    //     return element.id == id;
-    //   });
-    //   if (oldProductIndex != null) {
-    //     var oldProductItem = oldProductsList.elementAt(oldProductIndex);
-    //     oldProductItem.isFavorite = false;
-    //     oldProductsList
-    //         .replaceRange(oldProductIndex, oldProductIndex, [oldProductItem]);
-
-    //     productsProvider.setItems(oldProductsList);
-    //     notifyListeners();
-    //   }
-    // }
   }
 }

@@ -175,7 +175,7 @@ class _StorePageState extends State<HomePage>
                                       0.0),
                                   child: OutlinedButton(
                                     child: new Text(
-                                      products[index].title,
+                                      products[index].companyTitle,
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold),
@@ -220,7 +220,7 @@ class _StorePageState extends State<HomePage>
                                 gridDelegate:
                                     SliverGridDelegateWithMaxCrossAxisExtent(
                                   maxCrossAxisExtent: 203,
-                                  childAspectRatio: 0.80,
+                                  childAspectRatio: 0.96,
                                 ),
                                 delegate: SliverChildBuilderDelegate(
                                   (context, index) {

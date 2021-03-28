@@ -81,7 +81,7 @@ class UserFavoritesCollection {
     pageProductsQuery
         .snapshots()
         .listen((QuerySnapshot productsSnapshot) async {
-      if (productsSnapshot.docs.isNotEmpty) {
+      // if (productsSnapshot.docs.isNotEmpty) {
 
         List<Product> newProducts = await getNewProducts(productsSnapshot.docs);
 
@@ -112,7 +112,7 @@ class UserFavoritesCollection {
 
         // #14: Determine if there's more products to request
         _hasMoreProducts = newProducts.length <= ProductsLimit;
-      }
+      // }
     });
   }
 

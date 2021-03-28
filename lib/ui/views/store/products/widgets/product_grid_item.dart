@@ -39,41 +39,6 @@ class _ProductGridItemState extends State<ProductGridItem> {
                   errorWidget: (context, url, error) =>
                       Center(child: Icon(Icons.error)),
                 ),
-                Container(
-                  padding: EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                        Colors.black.withOpacity(0.6),
-                        Colors.transparent
-                      ])),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Flexible(
-                        fit: FlexFit.tight,
-                        flex: 5,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(4.0,0.0,0.0,0.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              // Container(color: Colors.blue,height: 26,),
-                              // Container(height: 24, color: Colors.blue,)\
-                              Text(
-                                product.companyTitle,
-                                style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 Positioned(
                   bottom: 4,
                   left: 4,

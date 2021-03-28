@@ -28,10 +28,10 @@ class AppDrawer extends StatelessWidget {
             ListTile(
               tileColor: Colors.white,
               leading: Icon(Icons.shop),
-              title: Text('Loja'),
+              title: Text('Início'),
               onTap: () {
                 Navigator.of(context).pushReplacementNamed(
-                  AppRoutes.AUTH_HOME,
+                  AppRoutes.HOME,
                 );
               },
             ),
@@ -39,7 +39,7 @@ class AppDrawer extends StatelessWidget {
             ListTile(
               tileColor: Colors.white,
               leading: Icon(Icons.shop),
-              title: Text('Loja'),
+              title: Text('Loja Compra'),
               onTap: () {
                 Navigator.of(context).pushReplacementNamed(
                   AppRoutes.STORE,
@@ -65,6 +65,17 @@ class AppDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).pushReplacementNamed(
                   AppRoutes.ORDERS,
+                );
+              },
+            ),
+            Divider(height: 4, color: Colors.grey[100]),
+            ListTile(
+              tileColor: Colors.white,
+              leading: Icon(Icons.shop),
+              title: Text('Loja Venda'),
+              onTap: () {
+                Navigator.of(context).pushReplacementNamed(
+                  AppRoutes.STORE,
                 );
               },
             ),

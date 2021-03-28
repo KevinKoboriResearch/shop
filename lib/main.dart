@@ -20,6 +20,7 @@ import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shop/app/providers/google_sign_in.dart';
 import 'package:shop/ui/views/store/products/product_form_page.dart';
+import 'package:shop/ui/views/home/home_page.dart';
 // import 'package:shop/app/libraries/rxdart/lib/rxdart.dart';
 import 'package:shop/ui/views/store/products/favorites_products_page.dart';
 
@@ -127,6 +128,7 @@ class MyApp extends StatelessWidget {
             // home: AuthOrHomeScreen(),
             routes: {
               AppRoutes.AUTH_HOME: (ctx) => AuthOrHomeScreen(),
+              AppRoutes.HOME: (ctx) => HomePage(),
               AppRoutes.STORE: (ctx) => StoreProductsPage(),
               AppRoutes.PRODUCT_DETAIL: (ctx) => ProductDetailScreen(),
               AppRoutes.CART: (ctx) => CartScreen(),

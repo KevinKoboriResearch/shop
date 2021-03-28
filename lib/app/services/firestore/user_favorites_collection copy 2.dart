@@ -47,73 +47,70 @@ class UserFavoritesCollection {
     // #7: Get and store the page index that the results belong to
     var currentRequestIndex = _allPagedResults.length;
 
-    Future<List<Product>> getNewProducts(
-        List<QueryDocumentSnapshot> products) async {
-      List<Product> newProductList = [];
+    pageProductsQuery
+        .snapshots()
+        .listen((QuerySnapshot productsSnapshot) async {
+      // if (productsSnapshot.docs.isNotEmpty) {
+      Future<List<Product>> getNewProducts(
+          List<QueryDocumentSnapshot> products) async {
+        List<Product> newProductList = [];
 
-      for (int i = 0; i < products.length; i++) {
-        var realProduct = await FirebaseFirestore.instance
-            .doc(products[i].data()['productReference'])
-            .get();
+        for (int i = 0; i < products.length; i++) {
+          var realProduct = await FirebaseFirestore.instance
+              .doc(products[i].data()['productReference'])
+              .get();
 
-        newProductList.add(Product(
-          id: realProduct.id,
-          coin: realProduct.data()['coin'],
-          companyTitle: realProduct.data()['companyTitle'],
-          categoryTitle: realProduct.data()['categoryTitle'],
-          description: realProduct.data()['description'],
-          enabled: realProduct.data()['enabled'],
-          images: realProduct.data()['images'],
-          interested: realProduct.data()['interested'],
-          price: realProduct.data()['price'],
-          promotion: realProduct.data()['promotion'],
-          rating: realProduct.data()['rating'],
-          sizes: realProduct.data()['sizes'],
-          subtitle: realProduct.data()['subtitle'],
-          title: realProduct.data()['title'],
-          quantity: realProduct.data()['quantity'],
-          isFavorite: true,
-        ));
+          newProductList.add(Product(
+            id: realProduct.id,
+            coin: realProduct.data()['coin'],
+            companyTitle: realProduct.data()['companyTitle'],
+            categoryTitle: realProduct.data()['categoryTitle'],
+            description: realProduct.data()['description'],
+            enabled: realProduct.data()['enabled'],
+            images: realProduct.data()['images'],
+            interested: realProduct.data()['interested'],
+            price: realProduct.data()['price'],
+            promotion: realProduct.data()['promotion'],
+            rating: realProduct.data()['rating'],
+            sizes: realProduct.data()['sizes'],
+            subtitle: realProduct.data()['subtitle'],
+            title: realProduct.data()['title'],
+            quantity: realProduct.data()['quantity'],
+            isFavorite: true,
+          ));
+        }
+        return newProductList;
       }
-      return newProductList;
-    }
 
-    pageProductsQuery.snapshots().listen((QuerySnapshot productsSnapshot) async {
-   
-      if (productsSnapshot.docs.isNotEmpty) {
-        List<QueryDocumentSnapshot> products = productsSnapshot.docs;
-        List<Product> newProducts = [];
-        if (products != null) {
-          newProducts = await getNewProducts(products);
-        }
-        // #8: Check if the page exists or not
-        var pageExists = currentRequestIndex < _allPagedResults.length;
-        
-        // #9: If the page exists update the products for that page
-        if (pageExists) {
-          _allPagedResults[currentRequestIndex] =
-              products == null ? [] : newProducts;
-        }
-        // #10: If the page doesn't exist add the page data
-        else {
-          _allPagedResults.add(newProducts);
-        }
+      List<Product> newProducts = await getNewProducts(productsSnapshot.docs);
 
-        // #11: Concatenate the full list to be shown
-        var allProducts = _allPagedResults.fold<List<Product>>(
-            [], (initialValue, pageItems) => initialValue..addAll(pageItems));
+      // #8: Check if the page exists or not
+      var pageExists = currentRequestIndex < _allPagedResults.length;
 
-        // #12: Broadcase all products
-        _productsController.add(allProducts);
-
-        // #13: Save the last document from the results only if it's the current last page
-        if (currentRequestIndex == _allPagedResults.length - 1) {
-          _lastDocument = productsSnapshot.docs.last;
-        }
-
-        // #14: Determine if there's more products to request
-        _hasMoreProducts = newProducts.length == ProductsLimit;
+      // #9: If the page exists update the products for that page
+      if (pageExists) {
+        _allPagedResults[currentRequestIndex] = newProducts;
       }
+      // #10: If the page doesn't exist add the page data
+      else {
+        _allPagedResults.add(newProducts);
+      }
+      print('>>>>>>>>>>>>>>> 5' + newProducts.toString());
+      // #11: Concatenate the full list to be shown
+      var allProducts = _allPagedResults.fold<List<Product>>(
+          [], (initialValue, pageItems) => initialValue..addAll(pageItems));
+
+      // #12: Broadcase all products
+      _productsController.add(allProducts);
+
+      // #13: Save the last document from the results only if it's the current last page
+      if (currentRequestIndex == _allPagedResults.length - 1) {
+        _lastDocument = productsSnapshot.docs.last;
+      }
+
+      // #14: Determine if there's more products to request
+      _hasMoreProducts = newProducts.length == ProductsLimit;
+      // }
     });
   }
 

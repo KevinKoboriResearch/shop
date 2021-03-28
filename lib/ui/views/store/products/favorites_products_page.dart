@@ -17,11 +17,6 @@ import 'package:shop/app/utils/app_routes.dart';
 import 'package:shop/app/services/creation_aware_list_item.dart';
 // import 'items/e_commerce_item.dart';
 
-enum FilterOptions {
-  Favorite,
-  All,
-}
-
 class FavoritesProductsPage extends StatefulWidget {
   const FavoritesProductsPage({
     Key key,
@@ -120,7 +115,7 @@ class _FavoritesProductsPageState extends State<FavoritesProductsPage>
                               // Navigator.of(context).pushNamed(
                               //   AppRoutes.FAVORITES,
                               // );
-                              Navigator.of(context).pop();
+                              // Navigator.of(context).pop();
                             },
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(

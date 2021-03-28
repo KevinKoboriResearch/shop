@@ -106,45 +106,6 @@ class _HomeProductGridItemState extends State<HomeProductGridItem> {
                     );
                   }),
                 ),
-                Positioned(
-                  bottom: 4,
-                  right: 4,
-                  child: Consumer<Product>(builder: (ctx, product, _) {
-                    return InkWell(
-                      onTap: () async {
-                        Scaffold.of(context).hideCurrentSnackBar();
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Produto adicionado com sucesso!',
-                            ),
-                            duration: Duration(seconds: 2),
-                            action: SnackBarAction(
-                              label: 'DESFAZER',
-                              onPressed: () {
-                                cart.removeSingleItem(product.id);
-                              },
-                            ),
-                          ),
-                        );
-                        cart.addItem(product);
-                      },
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(7, 7, 7, 7),
-                        height: 26,
-                        width: 26,
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.8),
-                          shape: BoxShape.circle,
-                        ),
-                        child: SvgPicture.asset(
-                          'assets/miscellaneous/svg/081-shopping-bags.svg',
-                          color: Colors.white,
-                        ),
-                      ),
-                    );
-                  }),
-                ),
               ],
             ),
           ),
@@ -160,17 +121,6 @@ class _HomeProductGridItemState extends State<HomeProductGridItem> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        Text(
-                          product.title,
-                              // +'asdas asda sdas dasd assdasdadadad sadasd a ',
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                            color: Colors.grey[800],
-                          ),
-                        ),
                         Row(
                           children: [
                             product.price != 0.00
@@ -182,7 +132,7 @@ class _HomeProductGridItemState extends State<HomeProductGridItem> {
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
-                                          fontSize: 13,
+                                          fontSize: 11,
                                           color: Colors.grey[600],
                                           fontWeight: FontWeight.bold,
                                           decoration:
@@ -198,7 +148,7 @@ class _HomeProductGridItemState extends State<HomeProductGridItem> {
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 13,
+                                          fontSize: 11,
                                           color: Colors.grey[600],
                                         ),
                                       )
@@ -213,7 +163,7 @@ class _HomeProductGridItemState extends State<HomeProductGridItem> {
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 13,
+                                      fontSize: 11,
                                       color: Colors.redAccent,
                                     ),
                                   )

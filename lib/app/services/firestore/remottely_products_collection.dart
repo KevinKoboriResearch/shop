@@ -8,11 +8,7 @@ class ProductsCollection {
 
   final CollectionReference _productsCollectionReference =
       FirebaseFirestore.instance
-          .collection('remottelyCompanies')
-          .doc('tapanapanterahs') // .doc(product.companyTitle) //
-          .collection('productCategories')
-          .doc('Tabacos') //.doc(product.categoryTitle) //
-          .collection('products');
+          .collection('remottelyProducts');
 
   final StreamController<List<Product>> _productsController =
       StreamController<List<Product>>.broadcast();
@@ -35,8 +31,7 @@ class ProductsCollection {
   void _requestProducts() {
     // #2: split the query from the actual subscription
     var pageProductsQuery = _productsCollectionReference
-        .orderBy('title')
-        // .orderBy('hating')
+        .orderBy('totalHating')
         // #3: Limit the amount of results
         .limit(ProductsLimit);
 

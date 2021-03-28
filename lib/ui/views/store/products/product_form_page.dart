@@ -234,6 +234,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
             .doc(productRef.id)
             .set({
           'productReference': productRef.path,
+          'totalHating': 0.0,
         });
       }
     } catch (error) {
