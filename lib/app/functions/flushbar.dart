@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
-import 'package:shop_app/app/utils/constants.dart';
+import 'package:shop/app/utils/constants.dart';
 
 void showFlushbar(BuildContext context, String msgTitle, String msg) {
   Flushbar<bool>(

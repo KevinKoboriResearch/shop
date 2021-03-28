@@ -9,11 +9,13 @@ class CartItem {
   final String title;
   final int quantity;
   final double price;
+  final String image;
 
   CartItem({
     @required this.id,
     @required this.productId,
     @required this.title,
+    @required this.image,
     @required this.quantity,
     @required this.price,
   });
@@ -40,38 +42,55 @@ class Cart with ChangeNotifier {
 
   void addItem(Product product) {
     if (_items.containsKey(product.id)) {
-      _items.update(
-        product.id,
-        (existingItem) => CartItem(
+      _items.update(product.id, (existingItem) {
+        return CartItem(
           id: existingItem.id,
           productId: product.id,
           title: existingItem.title,
+          image: existingItem.image,
           quantity: existingItem.quantity + 1,
           price: existingItem.price,
-        ),
-      );
+        );
+      });
     } else {
-      _items.putIfAbsent(
-        product.id,
-        () => CartItem(
+      _items.putIfAbsent(product.id, () {
+        return CartItem(
           id: Random().nextDouble().toString(),
           productId: product.id,
           title: product.title,
           price: product.price,
+          image: product.images[0]['url'],
           quantity: 1,
-        ),
-      );
+        );
+      });
     }
 
     notifyListeners();
   }
 
+  void addItemFromCart(CartItem cart) {
+    //cart
+    if (_items.containsKey(cart.productId)) {
+      _items.update(cart.productId, (existingItem) {
+        return CartItem(
+          id: existingItem.id,
+          productId: cart.productId,
+          title: existingItem.title,
+          image: existingItem.image,
+          quantity: existingItem.quantity + 1,
+          price: existingItem.price,
+        );
+      });
+    }
+    notifyListeners();
+  }
+
   void removeSingleItem(productId) {
-    if(!_items.containsKey(productId)) {
+    if (!_items.containsKey(productId)) {
       return;
     }
 
-    if(_items[productId].quantity == 1) {
+    if (_items[productId].quantity == 1) {
       _items.remove(productId);
     } else {
       _items.update(
@@ -81,6 +100,7 @@ class Cart with ChangeNotifier {
           productId: existingItem.productId,
           title: existingItem.title,
           quantity: existingItem.quantity - 1,
+          image: existingItem.image,
           price: existingItem.price,
         ),
       );

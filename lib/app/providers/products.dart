@@ -101,10 +101,10 @@ class Products with ChangeNotifier {
         .listenToUserFavoriteProductsRealTime()
         .listen((productsData) {
       List<Product> updatedProducts = productsData;
-      if (updatedProducts != null && updatedProducts.length > 0) {
+      // if (updatedProducts != null && updatedProducts.length > 0) {
         _favoriteItems = updatedProducts;
         notifyListeners();
-      }
+      // }
       // else {
       //   _favoriteItems = [];
       //   notifyListeners();

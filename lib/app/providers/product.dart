@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/app/providers/products.dart';
+import 'package:shop/app/providers/products.dart';
 import 'dart:async';
 
 class Product with ChangeNotifier {
@@ -106,29 +106,6 @@ class Product with ChangeNotifier {
 
   Future<void> toggleFavorite(
       BuildContext context, String type, String productRef) async {
-    if (type == 'favorites') {
-      final productsProvider = Provider.of<Products>(context, listen: false);
-
-      // if (productsProvider.favoriteItems.length == 1) {
-      //   List<Product> val = [];
-      //   productsProvider.setFavoriteItems(val);
-      //   notifyListeners();
-      // } else {
-      List<Product> oldProductsList = productsProvider.items;
-
-      var oldProductIndex = oldProductsList.indexWhere((element) {
-        return element.id == id;
-      });
-
-      var oldProductItem = oldProductsList.elementAt(oldProductIndex);
-      oldProductItem.isFavorite = false;
-      oldProductsList
-          .replaceRange(oldProductIndex, oldProductIndex + 1, [oldProductItem]);
-
-      productsProvider.setItems(oldProductsList);
-      notifyListeners();
-    }
-    // }
     _toggleFavorite();
 
     try {
@@ -151,5 +128,38 @@ class Product with ChangeNotifier {
     } catch (error) {
       _toggleFavorite();
     }
+
+    // if (type == 'favorites') {
+    //   final productsProvider = Provider.of<Products>(context, listen: false);
+
+    //   // if (productsProvider.favoriteItems.length == 1) {
+    //   //   List<Product> val = [];
+    //   //   productsProvider.setFavoriteItems(val);
+    //   //   notifyListeners();
+    //   // } else {
+    //   // if (productsProvider.favoriteItems.length == 1) {
+    //   //   List<Product> val = [];
+    //   //   // productsProvider.setFavoriteItems(val);
+    //   //   productsProvider.setItems(val);
+
+    //   //   notifyListeners();
+
+    //   // } else {
+
+    //   List<Product> oldProductsList = productsProvider.items;
+
+    //   var oldProductIndex = oldProductsList.indexWhere((element) {
+    //     return element.id == id;
+    //   });
+    //   if (oldProductIndex != null) {
+    //     var oldProductItem = oldProductsList.elementAt(oldProductIndex);
+    //     oldProductItem.isFavorite = false;
+    //     oldProductsList
+    //         .replaceRange(oldProductIndex, oldProductIndex, [oldProductItem]);
+
+    //     productsProvider.setItems(oldProductsList);
+    //     notifyListeners();
+    //   }
+    // }
   }
 }

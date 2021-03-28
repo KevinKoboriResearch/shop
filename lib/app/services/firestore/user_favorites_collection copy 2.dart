@@ -78,20 +78,21 @@ class UserFavoritesCollection {
       return newProductList;
     }
 
-    pageProductsQuery
-        .snapshots()
-        .listen((QuerySnapshot productsSnapshot) async {
+    pageProductsQuery.snapshots().listen((QuerySnapshot productsSnapshot) async {
+   
       if (productsSnapshot.docs.isNotEmpty) {
-
-        List<Product> newProducts = await getNewProducts(productsSnapshot.docs);
-
+        List<QueryDocumentSnapshot> products = productsSnapshot.docs;
+        List<Product> newProducts = [];
+        if (products != null) {
+          newProducts = await getNewProducts(products);
+        }
         // #8: Check if the page exists or not
         var pageExists = currentRequestIndex < _allPagedResults.length;
-
+        
         // #9: If the page exists update the products for that page
         if (pageExists) {
-          _allPagedResults[currentRequestIndex] = newProducts;
-          // productsSnapshot.docs == null ? [] : newProducts;
+          _allPagedResults[currentRequestIndex] =
+              products == null ? [] : newProducts;
         }
         // #10: If the page doesn't exist add the page data
         else {
@@ -111,7 +112,7 @@ class UserFavoritesCollection {
         }
 
         // #14: Determine if there's more products to request
-        _hasMoreProducts = newProducts.length <= ProductsLimit;
+        _hasMoreProducts = newProducts.length == ProductsLimit;
       }
     });
   }

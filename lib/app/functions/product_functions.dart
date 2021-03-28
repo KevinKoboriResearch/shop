@@ -5,9 +5,10 @@ class ProductFunctions {
     if (doubleValue > 999.99) {
       return NumberFormat.compact().format(doubleValue);
     } else {
-      return NumberFormat.currency(
-              customPattern: '###,###.##', locale: 'nl_NL')
-          .format(doubleValue);
+      return NumberFormat.simpleCurrency(locale: 'pt').format(doubleValue);
+      // NumberFormat.currency(
+      //         customPattern: '###,###.##', locale: 'pt_BR')//BRL nl_NL en_US
+      //     .format(doubleValue);
     }
   }
 }

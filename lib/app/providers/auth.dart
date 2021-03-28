@@ -3,9 +3,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:shop_app/app/services/store.dart';
-import 'package:shop_app/app/exceptions/auth_exception.dart';
-import 'package:shop_app/app/utils/constants.dart';
+import 'package:shop/app/services/store.dart';
+import 'package:shop/app/exceptions/auth_exception.dart';
+import 'package:shop/app/utils/constants.dart';
 class Auth with ChangeNotifier {
   String _userId;
   String _token;

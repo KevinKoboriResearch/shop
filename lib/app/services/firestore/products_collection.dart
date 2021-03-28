@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shop_app/app/providers/product.dart';
+import 'package:shop/app/providers/product.dart';
 import 'dart:async';
 
 class ProductsCollection {

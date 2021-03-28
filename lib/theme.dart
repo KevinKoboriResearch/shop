@@ -5,9 +5,15 @@ import 'constants.dart';
 ThemeData theme() {
   return ThemeData(
     scaffoldBackgroundColor: Colors.white,
-    fontFamily: "Muli",
+    fontFamily: 'lato',//"Muli",
     appBarTheme: appBarTheme(),
     textTheme: textTheme(),
+    primaryColor: Colors.black,
+    splashColor: Colors.white,
+    dividerColor: Colors.grey[100],
+    accentColor: Colors.deepOrange,
+    canvasColor: Colors.white,
+    focusColor: Colors.black,
     inputDecorationTheme: inputDecorationTheme(),
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );

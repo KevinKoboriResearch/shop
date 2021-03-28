@@ -1,34 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/routes.dart';
-import 'package:shop_app/screens/profile/profile_screen.dart';
-import 'package:shop_app/screens/home/home_screen.dart';
-import 'package:shop_app/theme.dart';
-import './size_config.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/app/utils/custom_route.dart';
+import 'package:shop/app/utils/custom_route.dart';
+import 'package:shop/theme.dart';
 
-import 'package:shop_app/app/utils/app_routes.dart';
+import 'package:shop/app/utils/app_routes.dart';
 
-import 'package:shop_app/app/providers/products.dart';
-import 'package:shop_app/app/providers/cart.dart';
-import 'package:shop_app/app/providers/orders.dart';
-import 'package:shop_app/app/providers/auth.dart';
+import 'package:shop/ui/views/auth_home_screen.dart';
+import 'package:shop/ui/views/product_detail_screen.dart';
+import 'package:shop/ui/views/cart_screen.dart';
+import 'package:shop/ui/views/orders_screen.dart';
+import 'package:shop/ui/views/products_screen.dart';
+
+import 'package:shop/app/providers/products.dart';
+import 'package:shop/app/providers/cart.dart';
+import 'package:shop/app/providers/orders.dart';
+import 'package:shop/app/providers/auth.dart';
+import 'package:shop/ui/views/store/products/store_products_page.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:shop_app/app/providers/google_sign_in.dart';
-import 'package:shop_app/screens/store/products/product_form_page.dart';
-// import 'package:shop_app/app/libraries/rxdart/lib/rxdart.dart';
-import 'package:shop_app/screens/store/products/favorites_products_page.dart';
+import 'package:shop/app/providers/google_sign_in.dart';
+import 'package:shop/ui/views/store/products/product_form_page.dart';
+// import 'package:shop/app/libraries/rxdart/lib/rxdart.dart';
+import 'package:shop/ui/views/store/products/favorites_products_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(
+    MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final Future<FirebaseApp> _init = Firebase.initializeApp();
@@ -67,6 +70,7 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'tapanapanterahs',
+            theme: theme(),
             // theme: ThemeData(
             //   // textTheme: TextTheme(headline1: TextStyle(color: Colors.black)),
             //   brightness: Brightness.light,
@@ -75,8 +79,8 @@ class MyApp extends StatelessWidget {
             //   primaryColor: Colors.black,
             //   dividerColor: Colors.grey[100],
             //   accentColor: Colors.deepOrange,
-            //   fontFamily: 'Lato',
             //   canvasColor: Colors.white,
+            //   fontFamily: 'PlayfairDisplay',//'Lato',
             //   pageTransitionsTheme: PageTransitionsTheme(
             //     builders: {
             //       TargetPlatform.android: CustomPageTransitionsBuilder(),
@@ -84,9 +88,6 @@ class MyApp extends StatelessWidget {
             //     },
             //   ),
             // ),
-            theme: theme(),
-            initialRoute: HomeScreen.routeName,
-            routes: routes,
             // theme: ThemeData(
             //   // pageTransitionsTheme: PageTransitionsTheme(builders: {
             //   //   TargetPlatform.android: CupertinoPageTransitionsBuilder(),
@@ -124,28 +125,20 @@ class MyApp extends StatelessWidget {
             //   splashColor: Colors.transparent,
             // ),
             // home: AuthOrHomeScreen(),
-            // routes: {
-            //   AppRoutes.AUTH_HOME: (ctx) => AuthOrHomeScreen(),
-            //   AppRoutes.PRODUCT_DETAIL: (ctx) => ProductDetailScreen(),
-            //   AppRoutes.CART: (ctx) => CartScreen(),
-            //   AppRoutes.ORDERS: (ctx) => OrdersScreen(),
-            //   AppRoutes.PRODUCTS: (ctx) => ProductsScreen(),
-            //     AppRoutes.FAVORITES: (ctx) => FavoritesProductsPage(),
-            //   AppRoutes.PRODUCT_FORM: (ctx) => ProductFormPage(
-            //       'tapanapanterahs', 'Tabacos', null), //ProductFormScreen(),
-            // },
+            routes: {
+              AppRoutes.AUTH_HOME: (ctx) => AuthOrHomeScreen(),
+              AppRoutes.STORE: (ctx) => StoreProductsPage(),
+              AppRoutes.PRODUCT_DETAIL: (ctx) => ProductDetailScreen(),
+              AppRoutes.CART: (ctx) => CartScreen(),
+              AppRoutes.ORDERS: (ctx) => OrdersScreen(),
+              AppRoutes.PRODUCTS: (ctx) => ProductsScreen(),
+              AppRoutes.FAVORITES: (ctx) => FavoritesProductsPage(),
+              AppRoutes.PRODUCT_FORM: (ctx) => ProductFormPage(
+                  'tapanapanterahs', 'Tabacos', null), //ProductFormScreen(),
+            },
           ),
         );
       },
     );
-    // return MaterialApp(
-    //   debugShowCheckedModeBanner: false,
-    //   title: 'Flutter Demo',
-    //   theme: theme(),
-    //   home: HomeScreen(),
-    //   // We use routeName so that we dont need to remember the name
-    //   // initialRoute: HomeScreen.routeName,
-    //   routes: routes,
-    // );
   }
 }

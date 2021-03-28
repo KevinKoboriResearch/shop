@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/app/utils/constants.dart';
+import 'package:shop/app/utils/constants.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'dart:ui';
 
