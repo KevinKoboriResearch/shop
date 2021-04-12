@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shop/ui/components/default_button.dart';
 
 import '../../../../constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:shop/ui/widgets/cart_item_widget.dart';
+import 'package:shop/widgets/cart_item_widget.dart';
 import 'package:shop/app/providers/cart.dart';
 import 'package:shop/app/providers/orders.dart';
 import 'package:shop/app/utils/my_flutter_app_icons.dart';
@@ -19,6 +18,7 @@ import 'package:provider/provider.dart';
 import 'package:shop/app/providers/product.dart';
 import 'package:shop/app/providers/cart.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 // class CheckoutCard extends StatelessWidget {
 class CheckoutCard extends StatefulWidget {
   final dynamic cart;
@@ -93,9 +93,8 @@ class _CheckoutCardState extends State<CheckoutCard> {
                     text: "Total:\n",
                     children: [
                       TextSpan(
-                        text: ProductFunctions()
-                                            .doubleValueToCurrency(
-                                                widget.cart.totalAmount),//${widget.cart.totalAmount}',
+                        text: ProductFunctions().doubleValueToCurrency(widget
+                            .cart.totalAmount), //${widget.cart.totalAmount}',
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ],
@@ -103,7 +102,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                 ),
                 SizedBox(
                   width: 190,
-                  child: DefaultButton(
+                  child: ElevatedButton(
                     child: _isLoading
                         ? CircularProgressIndicator()
                         : Text(
@@ -113,8 +112,8 @@ class _CheckoutCardState extends State<CheckoutCard> {
                               color: Colors.white,
                             ),
                           ),
-                    press: widget.cart.totalAmount == 0
-                        ? null
+                    onPressed: widget.cart.totalAmount == 0
+                        ? () {}
                         : () async {
                             setState(() {
                               _isLoading = true;

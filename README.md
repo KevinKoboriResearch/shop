@@ -2,6 +2,8 @@
 
 A new Flutter project.
 
+flutter run -d chrome --web-port 8080 --web-renderer html
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

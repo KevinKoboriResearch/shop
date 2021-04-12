@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shop/app/providers/google_sign_in.dart';
-import 'package:shop/ui/widgets/sign_up_widget.dart';
-import 'package:shop/ui/widgets/global/build_loading.dart';
-import 'package:shop/ui/views/store/products/store_products_page.dart';
-import 'package:shop/ui/views/home/home_page.dart';
+import 'package:shop/widgets/sign_up_widget.dart';
+import 'package:shop/widgets/global/build_loading.dart';
+import 'package:shop/views/store/products/store_products_page.dart';
+import 'package:shop/views/home/home_page.dart';
 
 class AuthOrHomeScreen extends StatelessWidget {
   @override

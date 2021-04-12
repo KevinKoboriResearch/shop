@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop/ui/widgets/add_size_dialog.dart';
+import 'package:shop/widgets/add_size_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -23,7 +23,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:shop/app/validators/product_validators.dart';
 
 import 'package:shop/app/styles/product_styles.dart';
-import 'package:shop/ui/widgets/product_sizes.dart';
+import 'package:shop/widgets/product_sizes.dart';
 import 'package:shop/app/functions/flushbar.dart';
 class ProductSizes extends FormField<List> {
 

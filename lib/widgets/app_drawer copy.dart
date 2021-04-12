@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop/ui/tiles/drawer_tile.dart';
+import 'package:shop/tiles/drawer_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';

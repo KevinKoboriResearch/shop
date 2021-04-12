@@ -5,24 +5,24 @@ import 'package:shop/theme.dart';
 
 import 'package:shop/app/utils/app_routes.dart';
 
-import 'package:shop/ui/views/auth_home_screen.dart';
-import 'package:shop/ui/views/product_detail_screen.dart';
-import 'package:shop/ui/views/cart_screen.dart';
-import 'package:shop/ui/views/orders_screen.dart';
-import 'package:shop/ui/views/products_screen.dart';
+import 'package:shop/views/auth_home_screen.dart';
+import 'package:shop/views/product_detail_screen.dart';
+import 'package:shop/views/cart_screen.dart';
+import 'package:shop/views/orders_screen.dart';
+import 'package:shop/views/products_screen.dart';
 
 import 'package:shop/app/providers/products.dart';
 import 'package:shop/app/providers/cart.dart';
 import 'package:shop/app/providers/orders.dart';
 import 'package:shop/app/providers/auth.dart';
-import 'package:shop/ui/views/store/products/store_products_page.dart';
+import 'package:shop/views/store/products/store_products_page.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shop/app/providers/google_sign_in.dart';
-import 'package:shop/ui/views/store/products/product_form_page.dart';
-import 'package:shop/ui/views/home/home_page.dart';
+import 'package:shop/views/store/products/product_form_page.dart';
+import 'package:shop/views/home/home_page.dart';
 // import 'package:shop/app/libraries/rxdart/lib/rxdart.dart';
-import 'package:shop/ui/views/store/products/favorites_products_page.dart';
+import 'package:shop/views/store/products/favorites_products_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -71,61 +71,24 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'tapanapanterahs',
-            theme: theme(),
-            // theme: ThemeData(
-            //   // textTheme: TextTheme(headline1: TextStyle(color: Colors.black)),
-            //   brightness: Brightness.light,
-            //   // hoverColor: Colors.orange,
-            //   splashColor: Colors.white,
-            //   primaryColor: Colors.black,
-            //   dividerColor: Colors.grey[100],
-            //   accentColor: Colors.deepOrange,
-            //   canvasColor: Colors.white,
-            //   fontFamily: 'PlayfairDisplay',//'Lato',
-            //   pageTransitionsTheme: PageTransitionsTheme(
-            //     builders: {
-            //       TargetPlatform.android: CustomPageTransitionsBuilder(),
-            //       TargetPlatform.iOS: CustomPageTransitionsBuilder(),
-            //     },
-            //   ),
-            // ),
-            // theme: ThemeData(
-            //   // pageTransitionsTheme: PageTransitionsTheme(builders: {
-            //   //   TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-            //   // }),
-            //   // inputDecorationTheme: InputDecorationTheme(
-            //   //   border: InputBorder.none,
-            //   // ),
-            //   hintColor: Colors.transparent,
-            //   focusColor: Colors.transparent,
-            //   hoverColor: Colors.transparent,
-            //   textTheme: TextTheme(
-            //     headline1: TextStyle(color: AppColors.astronautOrangeDarkColor),
-            //     headline2: TextStyle(color: AppColors.astronautOrangeDarkColor),
-            //     headline3: TextStyle(color: AppColors.astronautOrangeDarkColor),
-            //     headline4: TextStyle(color: AppColors.astronautOrangeDarkColor),
-            //     headline5: TextStyle(color: AppColors.astronautOrangeDarkColor),
-            //     headline6: TextStyle(color: AppColors.astronautOrangeDarkColor),
-            //     subtitle1: TextStyle(color: AppColors.astronautOrangeDarkColor),
-            //     subtitle2: TextStyle(color: AppColors.astronautOrangeDarkColor),
-            //     bodyText1: TextStyle(
-            //       fontSize: 16,
-            //     ),
-            //     bodyText2: TextStyle(),
-            //   ).apply(
-            //     bodyColor: AppColors.textColor,
-            //     displayColor: AppColors.astronautOrangeDarkColor,
-            //   ),
-            //   fontFamily: 'Lato',
-            //   accentColor: AppColors.accentColor,
-            //   indicatorColor: AppColors.indicatorColor,
-            //   primaryColor: AppColors.astratosDarkGreyColor,
-            //   canvasColor: AppColors.astronautCanvasColor,
-            //   buttonColor: AppColors.astronautCanvasColor,
-            //   highlightColor: Colors.transparent,
-            //   splashColor: Colors.transparent,
-            // ),
-            // home: AuthOrHomeScreen(),
+            // theme: theme(),
+            theme: ThemeData(
+              // textTheme: TextTheme(headline1: TextStyle(color: Colors.black)),
+              brightness: Brightness.light,
+              // hoverColor: Colors.orange,
+              splashColor: Colors.white,
+              primaryColor: Colors.black,
+              dividerColor: Colors.grey[100],
+              accentColor: Colors.deepOrange,
+              canvasColor: Colors.white,
+              fontFamily: 'Lato',
+              pageTransitionsTheme: PageTransitionsTheme(
+                builders: {
+                  TargetPlatform.android: CustomPageTransitionsBuilder(),
+                  TargetPlatform.iOS: CustomPageTransitionsBuilder(),
+                },
+              ),
+            ),
             routes: {
               AppRoutes.AUTH_HOME: (ctx) => AuthOrHomeScreen(),
               AppRoutes.HOME: (ctx) => HomePage(),

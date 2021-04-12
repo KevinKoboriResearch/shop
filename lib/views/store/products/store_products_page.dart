@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop/ui/views/store/products/widgets/product_grid_item.dart';
-import 'package:shop/ui/widgets/app_drawer.dart';
+import 'package:shop/views/store/products/widgets/product_grid_item.dart';
+import 'package:shop/widgets/app_drawer.dart';
 import 'package:shop/app/utils/my_flutter_app_icons.dart';
 import 'dart:math' as math;
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:shop/app/providers/products.dart';
-import 'package:shop/ui/widgets/badge.dart';
+import 'package:shop/widgets/badge.dart';
 import 'package:shop/app/providers/cart.dart';
 import 'package:shop/app/utils/app_routes.dart';
-import 'package:shop/ui/views/cart/cart_screen.dart';
+import 'package:shop/views/cart/cart_screen.dart';
 import 'package:shop/app/services/creation_aware_list_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -229,9 +229,10 @@ class _StorePageState extends State<StoreProductsPage>
                             child: InkWell(
                               onTap: () {
                                 Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => CartScreen()),
-  );
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CartScreen()),
+                                );
                                 // Navigator.of(context).pushNamed(AppRoutes.CART);
                               },
                               child: Container(

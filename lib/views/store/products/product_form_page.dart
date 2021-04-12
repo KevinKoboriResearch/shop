@@ -18,7 +18,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:shop/app/validators/product_validators.dart';
-import 'package:shop/ui/widgets/product_sizes.dart';
+import 'package:shop/widgets/product_sizes.dart';
 import 'package:shop/app/functions/flushbar.dart';
 
 class ProductFormPage extends StatefulWidget {
